@@ -429,7 +429,7 @@
                   </span>
                   <br>
                   <span class="link-block">
-                    <a href="https://huggingface.co/xlangai/Jedi-7B-1080p"
+                    <a href="https://github.com/xlang-ai/OpenCUA"
                       class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                         <i class="fab fa-github"></i>
@@ -438,7 +438,7 @@
                     </a>
                   </span>
                   <span class="link-block">
-                    <a href=""
+                    <a href="https://junliwang.tech/agentnet-docs/"
                       class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                         <i class="fas fa-tools"></i>
@@ -696,15 +696,18 @@
             The tasks spans over 140 applications and 190 websites, often involving multi-app workflows, professional tools, and uncommon features. 
             Compared to prior GUI datasets, AgentNet is the first desktop trajectory-level dataset that is realistic, complex, diverse, and multimodal.
           </p>
-          
-          <p>
-            Notably, we designed a novel pipeline to augment reflective long CoT for each step in the tasks: generator and reflector iteratively generate and verify the reasoning components between the observation and ground-truth actions <span class="pointing-finger">👇</span>
-          </p>
         </div>
+        
         <div class="hero-body">
           <img src="./static/images/agnet_method_00.png"
             alt="Main figure" width="80%">
         </div>
+        <div class="content has-text-justified" style="margin-top: 30px;">
+          <p>
+            Notably, we designed a novel pipeline to augment reflective long CoT for each step in the tasks: generator and reflector iteratively generate and verify the reasoning components between the observation and ground-truth actions <span class="pointing-finger">👆</span>
+          </p>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -721,7 +724,7 @@
       controls
       playsinline>
     </video>
-    <button class="agentnet-fullscreen-close" onclick="closeFullscreenVideo()">×</button>
+    <button class="agentnet-fullscreen-close" onclick="closeFullscreenVideo()">x</button>
     <div class="agentnet-fullscreen-title" id="agentnetFullscreenTitle"></div>
   </div>
 </div>
@@ -732,9 +735,14 @@
       <div class="container-fluid">
         <div class="columns is-centered has-text-centered">
           <div class="column is-10">
-            <h2 class="title is-3">OpenCUA Models and Computer-Use Showcase</h2>
+            <h2 class="title is-3">OpenCUA Models</h2>
             <p>
-              Based on open-sourced Qwen2-VL-7B and Kimi-VL-A3B, we developed our computer-use agent models - OpenCUA-7B and OpenCUA-A3B. They are built upon AgentNet dataset throught supervised fine-tuning (SFT).
+              Based on open-sourced Qwen2-VL-7B and Kimi-VL-A3B, we developed our computer-use agent models - <b>OpenCUA-7B</b> and <b>OpenCUA-A3B</b>. 
+              They are built upon AgentNet dataset throught supervised fine-tuning (SFT).
+            <p>
+            <h3 class="title is-4">Computer-Use Showcase</h3>
+            <p>
+              Here are some task trajectories selected from the evaluation results of OpenCUA-7B in OSWorld and WindowsAgentArena👇
             </p>
             <div class="trajectory-selector">
               <div class="tabs">
@@ -807,12 +815,6 @@
                 </button>
               </div>
             </div>
-            <sup>
-              <p>
-                Task trajectories are selected from the evaluation results of OpenCUA-7B in <b>OSWorld</b> and
-                <b>WindowsAgentArena</b>.
-              </p>
-            </sup>
           </div>
         </div>
       </div>
@@ -964,7 +966,7 @@
             
             <h3 class="title is-4">Grounding Ability</h3>
             <p>
-              We select 3 benchmarks for GUI grounding including <b>ScreenSpot-v2</b>, <b>ScreenSpot-Pro</b> and <a href="https://osworld-grounding.github.io/" target="_blank"><b>OSWorld-G</b></a>.
+              We evaluate our models on 3 GUI grounding benchmarks including <b>ScreenSpot-v2</b>, <b>ScreenSpot-Pro</b> and <a href="https://osworld-grounding.github.io/" target="_blank"><b>OSWorld-G</b></a>.
             </p>
             <div class="table-container">
               <table class="comparison-table">
@@ -1556,7 +1558,11 @@ window.debugAgentNetAutoPlay = debugAgentNetAutoPlay;
       <div class="container is-max-desktop content">
         <h2 class="title">BibTeX</h2>
         <p>If you find this work useful, please consider citing our paper:</p>
-        <pre><code>@misc{}</code></pre>
+        <pre><code>@article{OpenCUA2025,
+          title={OpenCUA: Open Foundations for Computer-Use Agents},
+          author={},
+          year={2025}
+        }</code></pre>
       </div>
     </section>
 
@@ -1564,7 +1570,7 @@ window.debugAgentNetAutoPlay = debugAgentNetAutoPlay;
       <div class="container">
         <div class="content has-text-centered">
           <a class="icon-link"
-            href="./static/videos/nerfies_paper.pdf">
+            href="https://arxiv.org/abs/2011.12948">
             <i class="fas fa-file-pdf"></i>
           </a>
           <a class="icon-link" href="https://github.com/keunhong"
