@@ -1,0 +1,1616 @@
+<!-- TODO: [1.5h] decide which to put for benchmark page--carousel for data examples -->
+<!-- TODO: [1h] add image carousel for dataset -->
+<!-- TODO: [1.5h] eval op on ss-pro -->
+<!-- 1. comparison between gpt-4o and ours
+2. comparison between different 4o+grounding method
+3. can we put our best socre on it?
+4. what about op 50 steps -->
+<!-- TODO: add new paper link -->
+<!-- TODO: favicon -->
+
+<!-- DONE: [50min] draw a curve and a smaller table for agentic ability, add best score-->
+<!-- DONE: [10min] Change colors for our model -->
+<!-- DONE: Add osworld showcase, and we don't need title -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description"
+      content="OpenCUA: Open Foundations for Computer-Use Agents - Annotation Tool, Dataset, Benchmark, and Computer-Use Agent Model">
+    <meta name="keywords"
+      content="OpenCUA, AgentNet, AgentNetBench, AgentNet Tool, Computer-Use Agent, OSWorld, Visual Language Model, Planning, Reasoning, Scaling, Dataset, Evaluation">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OpenCUA: Open Foundations for Computer-Use Agents</title>
+
+    <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/css/bulma-carousel.min.css"> -->
+    <!-- <link rel="stylesheet" href="./static/css/bulma-carousel.css"> -->
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/images/website-icon.svg">
+    <style>
+      .trajectory-sidebar {
+        /* Adjust this value as needed, 560px is an estimate */
+        max-height: 420px; 
+        overflow-y: auto; /* Add scrollbar when content exceeds max-height */
+      }
+
+      .card-content.has-fixed-height {
+        overflow: hidden !important; /* Remove scrollbar */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      
+      .card-content.has-fixed-height::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+      }
+      
+      .card .content {
+        overflow: hidden !important;
+      }
+
+      .step-action-details code {
+        display: inline-block; 
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        font-size: 0.75em; /* 更小的基础字体尺寸 */
+        padding: 4px 8px; /* 为整个代码块添加内边距 */
+        margin-top: 5px;
+        margin-bottom: 10px;
+        background-color: transparent; /* 移除灰色背景 */
+        border-radius: 4px; /* 圆角 */
+        color: inherit;
+      }
+
+      .step-action-details .action-type {
+        display: inline-block;
+        background-color: #666666; /* 改为中灰色 */
+        color: #ffffff; /* 白色文本以提高在灰色背景上的可读性 */
+        padding: 3px 8px; /* 较小的内边距 */
+        border-radius: 12px; /* 适当减小圆角 */
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-right: 6px; /* 减小右侧间距 */
+        font-size: 0.85em; /* 略微减小字体 */
+        line-height: 1;
+        min-width: 60px; /* 添加最小宽度 */
+        text-align: center; /* 文本居中 */
+      }
+
+      .step-action-details .action-coords {
+        display: inline-block;
+        color: #606060; /* 稍深一点的灰色，在灰色背景上更清晰 */
+        font-size: 0.65em; /* 与action-type匹配 */
+        vertical-align: middle;
+      }
+
+      .step-list-item.active {
+        background-color: #e8e8e8; /* Highlight active step slightly more */
+      }
+
+      /* 鼠标指示器样式 */
+      .mouse-indicator {
+        position: absolute;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      .trajectory-main {
+        position: relative;
+      }
+
+      .click-indicator {
+        width: 30px;
+        height: 30px;
+        background-image: url('./static/images/pointinghand.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        position: absolute;
+        transform: none;
+      }
+
+      .drag-indicator {
+        width: 30px;
+        height: 30px;
+        background-image: url('./static/images/vector.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        position: absolute;
+        transform: none;
+      }
+      
+      .click-point {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background-color: #ff5722;
+        border-radius: 50%;
+        z-index: 99;
+        transform: translate(-50%, -50%);
+      }
+      
+      .drag-line {
+        position: absolute;
+        height: 2px;
+        background-color: #F44336; /* Red line */
+        z-index: 98;
+        transform-origin: left center;
+      }
+      
+      .drag-line::after {
+        content: '';
+        position: absolute;
+        width: 8px;  /* Length of the V's arms */
+        height: 8px; /* Affects the angle and size */
+        box-sizing: border-box;
+        border-style: solid;
+        border-color: #F44336; /* Color of the V */
+        border-width: 0 2px 2px 0; /* Creates an L-shape (bottom and right borders) */
+                                   /* Stroke thickness is 2px */
+        top: 50%; /* Vertically center the base of the L-shape */
+        right: -4px; /* Position the L-shape so its corner (eventual V tip) is at the line's end */
+                     /* Needs adjustment: - (height_of_L_corner_element / 2 / sqrt(2) ) approx */
+        transform: translateY(-50%) rotate(-45deg); /* Rotate L to V, V points right */
+      }
+
+      /* Trajectory selector styles */
+      .trajectory-selector {
+        margin-bottom: 1.5rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .trajectory-selector .tabs {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .trajectory-selector .tabs ul {
+        border-bottom-color: #dbdbdb;
+        justify-content: center;
+      }
+
+      .trajectory-selector .tabs li.is-active a {
+        border-bottom-color: #9966cc;
+        color: #9966cc;
+      }
+
+      .trajectory-tab {
+        cursor: pointer;
+      }
+    </style>
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-carousel.js"></script> -->
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+  </head>
+  <body>
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu"
+          aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start"
+          style="flex-grow: 1; justify-content: center;">
+          <a class="navbar-item" href="https://xlang.ai/">
+            <span class="icon">
+              <i class="fas fa-home"></i>
+            </span>
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              More Research
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="https://os-world.github.io/">
+                OSWorld
+              </a>
+              <a class="navbar-item" href="https://osworld-grounding.github.io/">
+                Jedi - OSWorld-G
+              </a>
+              <a class="navbar-item" href="https://arena.xlang.ai/">
+                Computer Use Agent Arena
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">OpenCUA: Open Foundations for Computer-Use Agents</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="https://xinyuanwangcs.github.io/">Xinyuan Wang*</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://bowenbryanwang.github.io/">Bowen Wang*</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=Etp3Eb8AAAAJ&hl=en">Dunjie Lu*</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://yangjl2003.github.io/">Junlin Yang*</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://tianbaoxie.com">Tianbao Xie*</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://junliwang.tech/">Junli Wang*</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://x.com/jiaqideng07">Jiaqi Deng</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Xiaole_Guo1">Xiaole Guo</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://yihengxu.com/">Yiheng Xu</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://chenwu.io/">Chen Henry Wu</a><sup>6</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=JPwg5MwAAAAJ&hl=en">Zhennan Shen</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Zhuokai_Li1">Zhuokai Li</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=zwcHlUMAAAAJ&hl=en">Ryan Li</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://xiaochuanli.com/">Xiaochuan Li</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Junda_Chen2">Junda Chen</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Boyuan_Zheng7">Boyuan Zheng</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://www.linkedin.com/in/peihang-li-b111052b7/">Peihang Li</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=1WzAOSkAAAAJ&hl=zh-CN">Fangyu Lei</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://rhythmcao.github.io/">Ruisheng Cao</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Yeqiao_Fu1">Yeqiao Fu</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Dongchan_Shin1">Dongchan Shin</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Martin_Shin1">Martin Shin</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Hu_Jiarui1">Jiarui Hu</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Yuyan_Wang8">Yuyan Wang</a><sup>1,2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://chenjix.github.io/">Jixuan Chen</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://yuxiaooye.github.io/">Yuxiao Ye</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://zdy023.github.io/">Danyang Zhang</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Yipu_Wang1">Yipu Wang</a><sup>3</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://arthur-heng.github.io/">Heng Wang</a><sup>3</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://cs.stanford.edu/~diyiy/">Diyi Yang</a><sup>4</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://www.victorzhong.com/">Victor Zhong</a><sup>5</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://openreview.net/profile?id=~Y.Charles2">Y.Charles</a><sup>3</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://kimiyoung.github.io/">Zhilin Yang</a><sup>3</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://taoyds.github.io/">Tao Yu&dagger;</a><sup>1,2</sup>
+                </span>
+                
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><sup>1</sup>The University of Hong Kong,</span>
+                <span class="author-block"><sup>2</sup>XLANG Lab,</span>
+                <span class="author-block"><sup>3</sup>Moonshot AI,</span><br>
+                <span class="author-block"><sup>4</sup>Stanford University,</span>
+                <span class="author-block"><sup>5</sup>University of Waterloo</span>
+                <span class="author-block"><sup>6</sup>Carnegie Mellon University</span>
+              </div>
+
+              <div class="is-size-10 publication-authors">
+                <span class="author-block"><sup>*</sup>Equal contribution</span>
+                <span class="author-block"><sup>&dagger;</sup>Corresponding
+                  author</span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- PDF Link. -->
+                  <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2505.13227"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+                  <!-- Code Link. -->
+                  <span class="link-block">
+                    <a href="https://huggingface.co/xlangai/OpenCUA"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <img src="./static/images/huggingface.svg"
+                          alt="Hugging Face" width="20" height="20">
+                      </span>
+                      <span>OpenCUA Models</span>
+                    </a>
+                  </span>
+                  <!-- Dataset Link. -->
+                  <span class="link-block">
+                    <a href="https://huggingface.co/datasets/xlangai/AgentNet"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <img src="./static/images/huggingface.svg"
+                          alt="Hugging Face" width="20" height="20">
+                      </span>
+                      <span>AgentNet Datasets</span>
+                    </a>
+                  </span>
+                  <br>
+                  <span class="link-block">
+                    <a href="https://huggingface.co/xlangai/Jedi-7B-1080p"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href=""
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-tools"></i>
+                      </span>
+                      <span>AgentNet Tool</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href=""
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-gamepad"></i>
+                      </span>
+                      <span>Huggingface Demo</span>
+                    </a>
+                  </span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <img src="./static/images/main_fig.png"
+            alt="Main figure" width="100%">
+        </div>
+      </div>
+    </section>
+
+    <!-- Abstract -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Vision-language models have demonstrated impressive capabilities as computer-use agents (CUAs) capable of automating diverse computer tasks. 
+                As their commercial potential grows, critical details of the most capable CUA systems remain closed and proprietary. As these agents will 
+                increasingly mediate digital interactions and execute consequential decisions on our behalf, the research community needs access to truly 
+                open CUA frameworks to study their capabilities, limitations, and risks. To bridge this gap, we propose OpenCUA, a comprehensive open-source 
+                framework for scaling CUA data and foundation models. Our framework consists of: (1) an annotation infrastructure that seamlessly captures human 
+                computer-use demonstrations; (2) AgentNet dataset, a dataset of 27K computer-use data samples spanning various operating systems, applications, 
+                and websites; (3) a pipeline that discretizes continuous actions into state-action pairs and synthesizes reflective long chain-of-thought (CoT) 
+                reasoning; (4) a training recipe for scalable CUA modeling; and (5) AgentNetBench, a multi-dimensional offline benchmark for faster CUA evaluation.
+                 Our AgentNet-7B, fine-tuned on AgentNet dataset, demonstrates strong performance on several CUA benchmarks, achieving a success rate of 20.1% on 
+                 OSWorld and 21.1% on WindowsAgentArena. Our training recipe, particularly its advanced reasoning mechanisms and strategic data mixture, enables 
+                 robust performance scaling with increased data size. Further in-depth analysis of our models also demonstrate strong cross-domain generalization
+                  and performance scaling with test-time compute. We will release the annotation tool, datasets, code, and models to build open foundations for 
+                  further CUA research.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!--/ Abstract. -->
+
+        <!--  Updates.  -->
+        <!-- <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Updates</h2>
+            <div class="content has-text-justified">
+              <ul>
+                <li><strong>[2025/05/12]</strong> Project website and code
+                  repository are now public</li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+        <!--/ Updates. -->
+      </div>
+    </section>
+
+    <!-- AgentNet Tool -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">AgentNet Tool</h2>
+            <section class="hero teaser">
+              <div class="container is-max-desktop">
+                <div class="hero-body">
+                  <img src="./static/images/agn_tool_fig.png"
+                    alt="AgentNet Tool" width="100%">
+                </div>
+              </div>
+            </section>
+            <div class="content has-text-justified">
+              <p>
+                Efficient and accurate annotation is essential for collecting high-quality computer-use agent data, yet no existing tools support natural, cross-platform task recording by non-technical users. 
+                To address this, we developed a user-friendly annotation tool that streamlines the collection and verification of computer-use demonstrations, runs on annotators' personal computers and records demonstrations in the background, capturing: (1) screen videos, (2) mouse and keyboard signals, and (3) accessibility trees (Axtree). 
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+<!-- AgentNet Dataset 带播放按钮的 HTML -->
+<!-- AgentNet Dataset 自动播放版本 -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">AgentNet Dataset</h2>
+        
+        <!-- Grid Container -->
+        <div class="agentnet-grid-container">
+          <!-- Video Grid Section -->
+          <div class="agentnet-video-section">
+            <div class="agentnet-video-grid">
+              <!-- Video 1 -->
+              <div class="agentnet-video-card" data-video-src="./static/videos/google_sheets.mp4">
+                <div class="agentnet-video-thumbnail">
+                  <div class="agentnet-video-label">(a) Google Sheets</div>
+                  <img src="./static/videos/google_sheets.png" alt="Google Sheets" class="agentnet-thumb">
+                  <video 
+                    muted 
+                    loop 
+                    preload="metadata" 
+                    class="agentnet-video"
+                    playsinline
+                    webkit-playsinline>
+                    <source src="./static/videos/google_sheets.mp4" type="video/mp4">
+                  </video>
+                  
+                  <!-- 控制按钮 -->
+                  <div class="agentnet-controls-overlay">
+                    <button class="agentnet-play-pause-button" title="播放/暂停">⏯</button>
+                    <button class="agentnet-fullscreen-button" title="全屏">⛶</button>
+                  </div>
+                  
+                  <!-- 加载指示器 -->
+                  <div class="agentnet-loading-indicator"></div>
+                  
+                  <div class="agentnet-video-title">
+                    Calculate average and standard deviation of scores from 2023 sem 1 to 2022 sem 2 in the Google sheet Scores
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video 2 -->
+              <div class="agentnet-video-card" data-video-src="./static/videos/amazon1.mp4">
+                <div class="agentnet-video-thumbnail">
+                  <div class="agentnet-video-label">(b) Amazon</div>
+                  <img src="./static/videos/amazon1.png" alt="Amazon" class="agentnet-thumb">
+                  <video 
+                    muted 
+                    loop 
+                    preload="metadata" 
+                    class="agentnet-video"
+                    playsinline
+                    webkit-playsinline>
+                    <source src="./static/videos/amazon1.mp4" type="video/mp4">
+                  </video>
+                  
+                  <!-- 控制按钮 -->
+                  <div class="agentnet-controls-overlay">
+                    <button class="agentnet-play-pause-button" title="播放/暂停">⏯</button>
+                    <button class="agentnet-fullscreen-button" title="全屏">⛶</button>
+                  </div>
+                  
+                  <!-- 加载指示器 -->
+                  <div class="agentnet-loading-indicator"></div>
+                  
+                  <div class="agentnet-video-title">
+                    Buy the kindle version of Foundations of Computer Vision by Antonio
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video 3 -->
+              <div class="agentnet-video-card" data-video-src="./static/videos/slides.mp4">
+                <div class="agentnet-video-thumbnail">
+                  <div class="agentnet-video-label">(c) Slides</div>
+                  <img src="./static/videos/slides.png" alt="Slides" class="agentnet-thumb">
+                  <video 
+                    muted 
+                    loop 
+                    preload="metadata" 
+                    class="agentnet-video"
+                    playsinline
+                    webkit-playsinline>
+                    <source src="./static/videos/slides.mp4" type="video/mp4">
+                  </video>
+                  
+                  <!-- 控制按钮 -->
+                  <div class="agentnet-controls-overlay">
+                    <button class="agentnet-play-pause-button" title="播放/暂停">⏯</button>
+                    <button class="agentnet-fullscreen-button" title="全屏">⛶</button>
+                  </div>
+                  
+                  <!-- 加载指示器 -->
+                  <div class="agentnet-loading-indicator"></div>
+                  
+                  <div class="agentnet-video-title">
+                    Customize fonts, colors, and effects for each slide layout within Slide Master in PowerPoint
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video 4 -->
+              <div class="agentnet-video-card" data-video-src="./static/videos/spotify.mov">
+                <div class="agentnet-video-thumbnail">
+                  <div class="agentnet-video-label">(d) Spotify</div>
+                  <img src="./static/videos/spotify.png" alt="Spotify" class="agentnet-thumb">
+                  <video 
+                    muted 
+                    loop 
+                    preload="metadata" 
+                    class="agentnet-video"
+                    playsinline
+                    webkit-playsinline>
+                    <source src="./static/videos/spotify.mov" type="video/quicktime">
+                  </video>
+                  
+                  <!-- 控制按钮 -->
+                  <div class="agentnet-controls-overlay">
+                    <button class="agentnet-play-pause-button" title="播放/暂停">⏯</button>
+                    <button class="agentnet-fullscreen-button" title="全屏">⛶</button>
+                  </div>
+                  
+                  <!-- 加载指示器 -->
+                  <div class="agentnet-loading-indicator"></div>
+                  
+                  <div class="agentnet-video-title">
+                    Open Spotify, search for Cui Jian, and play the song 花房姑娘
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart Section -->
+          <div class="agentnet-chart-section">
+            <div class="agentnet-chart-card">
+              <img src="./static/images/domain_distribution.png" alt="Domain Distribution" class="agentnet-chart-image">
+              <h3 class="agentnet-chart-title">Domain Distribution</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Text -->
+        <div class="content has-text-justified" style="margin-top: 30px;">
+          <p>
+            To facilitate the development of computer-use agents, we collected a large-scale computer-use agent task dataset, AgentNet.
+            Our released dataset consists of 21K human-annotated computer-use tasks, including 17K from Windows/macOS and 3K from Ubuntu system. 
+            The tasks spans over 140 applications and 190 websites, often involving multi-app workflows, professional tools, and uncommon features. 
+            Compared to prior GUI datasets, AgentNet is the first desktop trajectory-level dataset that is realistic, complex, diverse, and multimodal.
+          </p>
+          
+          <p>
+            Notably, we designed a novel pipeline to augment reflective long CoT for each step in the tasks: generator and reflector iteratively generate and verify the reasoning components between the observation and ground-truth actions <span class="pointing-finger">👇</span>
+          </p>
+        </div>
+        <div class="hero-body">
+          <img src="./static/images/agnet_method_00.png"
+            alt="Main figure" width="80%">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 全屏模态框 -->
+<div class="agentnet-fullscreen-modal" id="agentnetFullscreenModal">
+  <div class="agentnet-fullscreen-content">
+    <video 
+      class="agentnet-fullscreen-video" 
+      id="agentnetFullscreenVideo"
+      muted 
+      loop 
+      controls
+      playsinline>
+    </video>
+    <button class="agentnet-fullscreen-close" onclick="closeFullscreenVideo()">×</button>
+    <div class="agentnet-fullscreen-title" id="agentnetFullscreenTitle"></div>
+  </div>
+</div>
+
+
+    <!-- Trajectory Visualization -->
+    <section class="section" id="trajectory-visualization">
+      <div class="container-fluid">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-10">
+            <h2 class="title is-3">OpenCUA Models and Computer-Use Showcase</h2>
+            <p>
+              Based on open-sourced Qwen2-VL-7B and Kimi-VL-A3B, we developed our computer-use agent models - OpenCUA-7B and OpenCUA-A3B. They are built upon AgentNet dataset throught supervised fine-tuning (SFT).
+            </p>
+            <div class="trajectory-selector">
+              <div class="tabs">
+                <ul>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="39be0d19-634d-4475-8768-09c130f5425d">
+                    <a>Slides</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="d53ff5ee-3b1a-431e-b2be-30ed2673079b-WOS">
+                    <a>Document</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="7a5a7856-f1b6-42a4-ade9-1ca81ca0f263-wos">
+                    <a>Chrome Bookmark</a>
+                  </li>
+                  <li class="trajectory-tab is-active"
+                    data-trajectory-id="4e60007a-f5be-4bfc-9723-c39affa0a6d3-WOS">
+                    <a>VSCode Extension</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="368d9ba4-203c-40c1-9fa3-da2f1430ce63">
+                    <a>Weather</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="5e2d93d8-8ad0-4435-b150-1692aacaa994-WOS">
+                    <a>VSCode</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="trajectory-container">
+              <div class="trajectory-sidebar">
+                <div class="user-query-section">
+                  <div class="query-marker">
+                    <span class="dot"></span>
+                    <span class="label">Task Instruction</span>
+                  </div>
+                  <div class="query-content">
+                    <p id="traj-instruction">Please help me install the autoDocstring extension in VS Code.</p>
+                  </div>
+                </div>
+
+                <ul class="step-list">
+                </ul>
+              </div>
+
+              <div class="trajectory-main">
+                <img id="traj-image"
+                  src="./static/trajs/4e60007a-f5be-4bfc-9723-c39affa0a6d3-WOS/step_1_20250511@060437.png"
+                  alt="Trajectory step 1">
+                <div id="mouse-indicator" class="mouse-indicator"></div>
+              </div>
+            </div>
+
+            <div class="controls-container">
+              <div class="step-controls">
+                <button class="control-btn" id="prev-step" disabled>
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="control-btn" id="play-steps">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn" id="next-step">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="control-btn" id="replay-step">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
+            <sup>
+              <p>
+                Task trajectories are selected from the evaluation results of OpenCUA-7B in <b>OSWorld</b> and
+                <b>WindowsAgentArena</b>.
+              </p>
+            </sup>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Result -->
+    <section class="section">
+      <div class="container is-max-desktop">
+
+        <div class="column  is-centered has-text-centered">
+          <div class="content">
+            <h2 class="title is-3">Results</h2>
+            <h3 class="title is-4">Online Agentic Ability</h3>
+            <p>
+              We evaluate our models on two computer-use benchmarks in
+              Online
+              environments: <b>OSWorld</b> and <b>WindowsAgentArena</b>. 
+            </p>
+            <style>
+              .comparison-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 1.5rem 0;
+                font-size: 0.9em;
+              }
+              .comparison-table th {
+                background-color: #f5f5f5;
+                padding: 12px;
+                text-align: left;
+                border-bottom: 2px solid #ddd;
+                font-weight: 600;
+              }
+              .comparison-table td {
+                padding: 12px;
+                border-bottom: 1px solid #ddd;
+              }
+              .comparison-table tr:last-child td {
+                border-bottom: 2px solid #ddd;
+              }
+              .comparison-table tr:hover {
+                background-color: #f8f9fa;
+              }
+              .model-name {
+                font-weight: 500;
+              }
+              .our-model {
+                font-weight: 600;
+                color:#1a1a74;
+              }
+              .best-score {
+                font-weight: 700;
+              }
+              .span-two-columns {
+                text-align: center;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+              }
+            </style>
+
+            <div class="table-container">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th rowspan="2">Agent Model</th>
+                    <th colspan="2">OSWorld</th>
+                    <th colspan="2">WAA</th>
+                  </tr>
+                  <tr>
+                    <th>15 steps</th>
+                    <th>50 steps</th>
+                    <th>15 steps</th>
+                    <th>50 steps</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <tr><td>GPT-4o <sup>[15]</sup></td><td>5.0</td><td>–</td><td>–</td><td>–</td></tr> -->
+                  <tr><td>Kimi-VL-A3B <sup>[28]</sup></td><td>8.2</td><td>–</td><td>10.4</td><td>–</td></tr>
+                  <tr><td>Qwen-2.5-VL-72B <sup>[3]</sup></td><td>8.8</td><td>–</td><td>–</td><td>–</td></tr>
+                  <tr><td>Aguvis-72B <sup>[40]</sup></td><td>10.3</td><td>–</td><td>–</td><td>–</td></tr>
+                  <tr><td>UI-TARS-7B-SFT <sup>[25]</sup></td><td>17.7</td><td>–</td><td>–</td><td>–</td></tr>
+                  <!-- <tr><td>UI-TARS-72B-SFT <sup>[25]</sup></td><td>18.8</td><td>–</td><td>–</td><td>–</td></tr> -->
+                  <tr><td>UI-TARS-72B-DPO <sup>[25]</sup></td><td>22.7</td><td>24.6</td><td>–</td><td>–</td></tr>
+                  <tr><td>Claude 3.7 Sonnet <sup>[1]</sup></td><td>15.5</td><td>26.0</td><td>–</td><td>–</td></tr>
+                  <tr><td>OpenAI CUA <sup>[24]</sup></td><td>19.7</td><td>32.6</td><td>–</td><td>–</td></tr>
+                  <td class="our-model">OpenCUA-A3B</td></td><td>15.5<sub>±0.84</sub></td><td>17.3<sub>±0.50</sub></td><td>16.0<sub>±1.33</sub></td><td>17.5<sub>±0.74</sub></td></tr>
+                  <td class="our-model">OpenCUA-7B</td><td><b>18.5<sub>±1.22</sub></b></td><td><b>20.1<sub>±2.12</sub></b></td><td><b>16.1<sub>±2.02</sub></b></td><td><b>21.1<sub>±2.03</sub></b></td></tr>
+                </tbody>
+              </table>
+              <p><sup>^</sup>Agentic results for OpenCUA are the average of four
+                runs.</p>
+            </div>
+
+
+            <h3 class="title is-4">Offline Agentic Ability</h3>
+            <div class="container is-max-desktop">
+              <div class="hero-body">
+                <img src="./static/images/AgentNetBench.png"
+                  alt="AgentNetBench" width="100%">
+              </div>
+            </div>
+            <p>
+              To make evaluation stable, fast and environment-free, we built <b>AgentNetBench</b>, an offline computer-use agent evaluation benchmark. 
+              It is comprised of 100 representative tasks selected from the AgentNet dataset, covering Windows and macOS platforms and diverse domains.
+              Each task was manually reviewed to refine goals and remove redundant actions. Notably, we manually provide multiple valid action options at each step because of the inherent multiplicity of valid actions in computer-use tasks.
+            </p>
+            <div class="table-container">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>Size</th>
+                    <th>Image Num.</th>
+                    <th>Step SR</th>
+                    <th>Coord. SR</th>
+                    <th>Content SR</th>
+                    <th>Func. SR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td colspan="7"><b>Zero-shot</b></td></tr>
+                  <tr>
+                    <td>Qwen2.5-VL-7B</td><td>7B</td><td>1</td><td>48.0</td><td>50.7</td><td>40.8</td><td>3.1</td>
+                  </tr>
+                  <tr>
+                    <td>Aguvis-7B</td><td>7B</td><td>1</td><td>52.4</td><td>56.7</td><td>43.3</td><td>0.0</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>Qwen2.5-VL-32B</td><td>32B</td><td>1</td><td>64.8</td><td>66.6</td><td>47.2</td><td>41.5</td>
+                  </tr>
+                  <tr>
+                    <td>Qwen2.5-VL-72B/td><td>72B</td><td>1</td><td>67.0</td><td>67.2</td><td>52.6</td><td>50.5</td>
+                  </tr>
+                  <tr>
+                    <td>OpenAI CUA</td><td>—</td><td>1</td><td>73.1</td><td>71.7</td><td>57.3</td><td>80.0</td>
+                  </tr>
+            
+                  <tr><td colspan="7"><b>Finetuned</b></td></tr>
+                  <tr>
+                    <td class="our-model">OpenCUA-A3B</td><td>16B(A3B)</td><td>3</td><td>73.1</td><td>75.5</td><td>57.7</td><td>55.6</td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">OpenCUA-7B</td><td>7B</td><td>3</td><td>73.8</td><td>75.7</td><td>61.3</td><td>55.7</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+            
+            <h3 class="title is-4">Grounding Ability</h3>
+            <p>
+              We select 3 benchmarks for GUI grounding including <b>ScreenSpot-v2</b>, <b>ScreenSpot-Pro</b> and <a href="https://osworld-grounding.github.io/" target="_blank"><b>OSWorld-G</b></a>.
+            </p>
+            <div class="table-container">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>ScreenSpot-v2</th>
+                    <th>ScreenSpot-Pro</th>
+                    <th>OSWorld-G</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="model-name">UI-TARS-7B</td>
+                    <td>91.6</td>
+                    <td>35.7</td>
+                    <td>47.5</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Operator</td>
+                    <td>70.5</td>
+                    <td>36.6</td>
+                    <td>40.6</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Qwen2.5-VL-3B</td>
+                    <td>80.9</td>
+                    <td>25.9</td>
+                    <td>27.3</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Qwen2.5-VL-7B</td>
+                    <td>88.8</td>
+                    <td>27.6</td>
+                    <td>31.4</td>
+                  </tr>
+                  <tr>
+                    <td class="model-name">Qwen2.5-VL-32B</td>
+                    <td>91.3</td>
+                    <td>39.4</td>
+                    <td>46.5</td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">OpenCUA-7B</td>
+                    <td>88.5</td>
+                    <td>23.7</td>
+                    <td>45.7</td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">OpenCUA-A3B</td>
+                    <td>91.4</td>
+                    <td>28.5</td>
+                    <td>48.6</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+            
+            <h3 class="title is-4">Data Scaling and Test Time Scaling</h3>
+            <p>
+              Our method enables performance to scale effectively with increased training data. The high Pass@N performance demonstrates OpenCUA-7B has great potencial of test time scaling.
+            </p>
+            <div class="columns is-variable is-4">
+
+              <!-- Card 1 -->
+              <div class="column">
+                <div class="card">
+                  <div class="card-image">
+                    <figure class="image">
+                      <img src="./static/images/main_scale_00.png"
+                           alt="Performance on OSWorld as training data scales">
+                    </figure>
+                  </div>
+                  <div class="card-content has-text-centered is-size-7">
+                    Training-data scaling on OSWorld
+                  </div>
+                </div>
+              </div>
+            
+              <!-- Card 2 -->
+              <div class="column">
+                <div class="card">
+                  <div class="card-image">
+                    <figure class="image">
+                      <img src="./static/images/passn_scale_00.png"
+                           alt="OSWorld Pass@N curves of OpenCUA-7B">
+                    </figure>
+                  </div>
+                  <div class="card-content has-text-centered is-size-7">
+                    Pass@N curves (temperature = 0.1)
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    
+
+    <!-- Dataset carousel -->
+    <!-- <section class="section">
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item">
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image">
+                    <img src="static/images/bench_text.png"
+                      alt="Text Matching">
+                  </figure>
+                </div>
+                <div class="card-content has-fixed-height">
+                  <div class="content">
+                    <h4>Text Matching</h4>
+                    <p><b>Original Instruction:</b> Select "As Attachment"</p>
+                    <p><b>Refined Instruction:</b> Click "As Attachment" in
+                      the
+                      "Forward messages" dropdown menu under the "Composition"
+                      section of the Thunderbird Mail settings.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image">
+                    <img src="static/images/bench_icon.png"
+                      alt="Element Recognition">
+                  </figure>
+                </div>
+                <div class="card-content has-fixed-height">
+                  <div class="content">
+                    <h4>Element Recognition</h4>
+                    <p><b>Original Instruction:</b> Click on Ellipse icon.</p>
+                    <p><b>Refined Instruction:</b> Click on Ellipse icon in
+                      the
+                      toolbar of LibreOffice Impress.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image">
+                    <img src="static/images/bench_layout.png"
+                      alt="Layout Understanding">
+                  </figure>
+                </div>
+                <div class="card-content has-fixed-height">
+                  <div class="content">
+                    <h4>Layout Understanding</h4>
+                    <p><b>Original Instruction:</b> Close the top notification
+                      bar.</p>
+                    <p><b>Refined Instruction:</b> Click the "X" button on the
+                      right side of the blue notification bar at the top of
+                      the
+                      LibreOffice Calc window.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image">
+                    <img src="static/images/bench_fine.png"
+                      alt="Fine-grained Manipulation">
+                  </figure>
+                </div>
+                <div class="card-content has-fixed-height">
+                  <div class="content">
+                    <h4>Fine-grained Manipulation</h4>
+                    <p><b>Original Instruction:</b> Select the place between
+                      the
+                      word "Person" and the number "1".</p>
+                    <p><b>Refined Instruction:</b> Place the cursor between
+                      the
+                      word "Person" and the number "1" in the
+                      "Name your Chrome profile" text box in the Chrome
+                      settings
+                      window.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image">
+                    <img src="static/images/bench_refuse.png" alt="Refusal">
+                  </figure>
+                </div>
+                <div class="card-content has-fixed-height">
+                  <div class="content">
+                    <h4>Refusal</h4>
+                    <p><b>Instruction:</b> Click on the email address of Cindy
+                      Williams.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+
+
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <p class="image">
+          <img src id="modalImage">
+        </p>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+    <script>
+      // Initialize carousel
+      document.addEventListener('DOMContentLoaded', function() {
+        // // Initialize Bulma Carousel
+        // var carousel = bulmaCarousel.attach('#results-carousel', {
+        //   slidesToScroll: 1,
+        //   slidesToShow: 3,
+        //   infinite: true,
+        //   autoplay: true,
+        //   autoplaySpeed: 3000,
+        //   pauseOnHover: true,
+        //   breakpoints: [
+        //     { changePoint: 480, slidesToShow: 1 },
+        //     { changePoint: 768, slidesToShow: 2 },
+        //     { changePoint: 1024, slidesToShow: 2 },
+        //     { changePoint: 1216, slidesToShow: 3 }
+        //   ]
+        // });
+
+        // Handle image clicks for zoom
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalClose = modal.querySelector('.modal-close');
+        const modalBackground = modal.querySelector('.modal-background');
+
+        // Get all carousel images
+        document.querySelectorAll('.carousel .card-image img').forEach(img => {
+          img.style.cursor = 'pointer';
+          img.addEventListener('click', function() {
+            modal.classList.add('is-active');
+            modalImg.src = this.src;
+          });
+        });
+
+        // Close modal when clicking close button or background
+        modalClose.addEventListener('click', () => {
+          modal.classList.remove('is-active');
+        });
+
+        modalBackground.addEventListener('click', () => {
+          modal.classList.remove('is-active');
+        });
+
+        // Close modal with escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+            modal.classList.remove('is-active');
+          }
+        });
+      });
+
+      // 添加到你的JavaScript文件中或放在页面底部的<script>标签内
+
+      // 修复的 AgentNet 视频自动播放 JavaScript - 替换你现有的相关代码
+
+// AgentNet 播放按钮和加载动画 JavaScript
+
+// AgentNet 自动播放 + 全屏功能 JavaScript
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('AgentNet auto-play system loading...');
+    
+    // 等待一秒确保DOM完全加载
+    setTimeout(function() {
+        initializeAgentNetAutoPlay();
+    }, 1000);
+});
+
+function initializeAgentNetAutoPlay() {
+    const videoCards = document.querySelectorAll('.agentnet-video-card');
+    console.log('Found AgentNet video cards:', videoCards.length);
+    
+    if (videoCards.length === 0) {
+        console.warn('No AgentNet video cards found!');
+        return;
+    }
+    
+    videoCards.forEach((card, index) => {
+        console.log('Initializing auto-play video card', index + 1);
+        
+        const video = card.querySelector('.agentnet-video');
+        const thumb = card.querySelector('.agentnet-thumb');
+        const playPauseBtn = card.querySelector('.agentnet-play-pause-button');
+        const fullscreenBtn = card.querySelector('.agentnet-fullscreen-button');
+        const videoTitle = card.querySelector('.agentnet-video-title');
+        
+        if (!video || !playPauseBtn || !fullscreenBtn) {
+            console.warn('Missing elements in video card', index + 1);
+            return;
+        }
+        
+        // 确保视频属性正确
+        video.muted = true;
+        video.loop = true;
+        video.preload = 'metadata';
+        video.playbackRate = 2.0; // 设置2倍速播放
+        
+        // 预加载视频
+        video.load();
+        
+        // 鼠标进入事件 - 自动播放
+        card.addEventListener('mouseenter', function() {
+            pauseAllOtherVideos(card);
+            startVideoPlayback(card, video);
+        });
+        
+        // 鼠标离开事件 - 暂停并重置
+        card.addEventListener('mouseleave', function() {
+            stopVideoPlayback(card, video);
+        });
+        
+        // 播放/暂停按钮点击事件
+        playPauseBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleVideoPlayback(card, video);
+        });
+        
+        // 全屏按钮点击事件
+        fullscreenBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openFullscreenVideo(video, videoTitle);
+        });
+        
+        // 视频事件监听
+        video.addEventListener('loadstart', function() {
+            console.log('Video loadstart:', index + 1);
+            card.classList.add('loading');
+        });
+        
+        video.addEventListener('canplay', function() {
+            console.log('Video can play:', index + 1);
+            card.classList.remove('loading');
+        });
+        
+        video.addEventListener('error', function(e) {
+            console.error('Video error for video', index + 1, ':', e);
+            card.classList.remove('loading');
+            
+            // 显示错误信息
+            const controls = card.querySelector('.agentnet-controls-overlay');
+            if (controls) {
+                controls.innerHTML = '<div style="color: white; font-size: 10px; text-align: center; padding: 4px;">Video<br>Error</div>';
+                controls.style.opacity = '1';
+                controls.style.background = 'rgba(255, 0, 0, 0.7)';
+                controls.style.borderRadius = '4px';
+            }
+        });
+        
+        video.addEventListener('playing', function() {
+            updatePlayPauseButton(playPauseBtn, false);
+        });
+        
+        video.addEventListener('pause', function() {
+            updatePlayPauseButton(playPauseBtn, true);
+        });
+        
+        // 初始化播放/暂停按钮状态
+        updatePlayPauseButton(playPauseBtn, true);
+    });
+    
+    // 初始化全屏模态框事件
+    initializeFullscreenModal();
+    
+    console.log('AgentNet auto-play system initialized successfully');
+}
+
+// 开始视频播放
+function startVideoPlayback(card, video) {
+    card.classList.add('loading');
+    
+    const playPromise = video.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            console.log('Auto-play started successfully');
+            card.classList.remove('loading');
+        }).catch(error => {
+            console.log('Auto-play failed:', error);
+            card.classList.remove('loading');
+            // 自动播放失败是正常的，不显示错误
+        });
+    }
+}
+
+// 停止视频播放
+function stopVideoPlayback(card, video) {
+    video.pause();
+    video.currentTime = 0; // 重置到开始
+    card.classList.remove('loading');
+}
+
+// 切换视频播放状态
+function toggleVideoPlayback(card, video) {
+    if (video.paused) {
+        startVideoPlayback(card, video);
+    } else {
+        video.pause();
+    }
+}
+
+// 暂停所有其他视频
+function pauseAllOtherVideos(currentCard) {
+    const videoCards = document.querySelectorAll('.agentnet-video-card');
+    videoCards.forEach(card => {
+        if (card !== currentCard) {
+            const video = card.querySelector('.agentnet-video');
+            if (video && !video.paused) {
+                stopVideoPlayback(card, video);
+            }
+        }
+    });
+}
+
+// 更新播放/暂停按钮
+function updatePlayPauseButton(button, isPaused) {
+    if (isPaused) {
+        button.textContent = '▶';
+        button.title = '播放';
+    } else {
+        button.textContent = '⏸';
+        button.title = '暂停';
+    }
+}
+
+// 打开全屏视频
+function openFullscreenVideo(video, titleElement) {
+    const modal = document.getElementById('agentnetFullscreenModal');
+    const fullscreenVideo = document.getElementById('agentnetFullscreenVideo');
+    const fullscreenTitle = document.getElementById('agentnetFullscreenTitle');
+    
+    if (!modal || !fullscreenVideo || !fullscreenTitle) {
+        console.error('Fullscreen modal elements not found');
+        return;
+    }
+    
+    // 设置全屏视频源
+    fullscreenVideo.src = video.currentSrc || video.src;
+    fullscreenVideo.currentTime = video.currentTime;
+    fullscreenVideo.playbackRate = 2.0; // 全屏视频也设置2倍速
+    
+    // 设置标题
+    if (titleElement) {
+        fullscreenTitle.textContent = titleElement.textContent;
+    }
+    
+    // 显示模态框
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // 播放全屏视频
+    fullscreenVideo.play().catch(error => {
+        console.log('Fullscreen video play failed:', error);
+    });
+    
+    // 暂停原视频
+    video.pause();
+}
+
+// 关闭全屏视频
+function closeFullscreenVideo() {
+    const modal = document.getElementById('agentnetFullscreenModal');
+    const fullscreenVideo = document.getElementById('agentnetFullscreenVideo');
+    
+    if (modal && fullscreenVideo) {
+        // 暂停全屏视频
+        fullscreenVideo.pause();
+        fullscreenVideo.src = '';
+        
+        // 隐藏模态框
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// 初始化全屏模态框事件
+function initializeFullscreenModal() {
+    const modal = document.getElementById('agentnetFullscreenModal');
+    
+    if (modal) {
+        // 点击模态框背景关闭
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeFullscreenVideo();
+            }
+        });
+        
+        // ESC键关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeFullscreenVideo();
+            }
+        });
+    }
+}
+
+// 页面可见性变化时暂停所有视频
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        const videoCards = document.querySelectorAll('.agentnet-video-card');
+        videoCards.forEach(card => {
+            const video = card.querySelector('.agentnet-video');
+            if (video && !video.paused) {
+                video.pause();
+            }
+        });
+        
+        // 关闭全屏视频
+        closeFullscreenVideo();
+    }
+});
+
+// 调试函数
+function debugAgentNetAutoPlay() {
+    console.log('=== AgentNet Auto-Play Debug Info ===');
+    
+    const cards = document.querySelectorAll('.agentnet-video-card');
+    console.log('Video cards found:', cards.length);
+    
+    cards.forEach((card, index) => {
+        const video = card.querySelector('.agentnet-video');
+        const playPauseBtn = card.querySelector('.agentnet-play-pause-button');
+        const fullscreenBtn = card.querySelector('.agentnet-fullscreen-button');
+        
+        console.log(`Card ${index + 1}:`);
+        console.log('  Video element:', !!video);
+        console.log('  Play/Pause button:', !!playPauseBtn);
+        console.log('  Fullscreen button:', !!fullscreenBtn);
+        
+        if (video) {
+            console.log('  Video src:', video.currentSrc || video.src);
+            console.log('  Video ready state:', video.readyState);
+            console.log('  Video paused:', video.paused);
+        }
+    });
+}
+
+// 暴露全局函数供HTML调用
+window.closeFullscreenVideo = closeFullscreenVideo;
+window.debugAgentNetAutoPlay = debugAgentNetAutoPlay;
+</script>
+
+    <!-- Acknowledgements -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Acknowledgements</h2>
+            <div class="content has-text-justified">
+              <p>
+                We appreciate Su Yu, Caiming Xiong, Binyuan Hui for their helpful feedback and discussion on this work. 
+                We appreciate Zaida Zhou, Flood Sung, Hao Hu, Huarong Chen, Calvin and Cody from Kimi Team for the great infrastructure provided and helpful discussion. 
+                We sincerely thank our all the annotators for their great effort on this project.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BibTeX -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <p>If you find this work useful, please consider citing our paper:</p>
+        <pre><code>@misc{}</code></pre>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <a class="icon-link"
+            href="./static/videos/nerfies_paper.pdf">
+            <i class="fas fa-file-pdf"></i>
+          </a>
+          <a class="icon-link" href="https://github.com/keunhong"
+            class="external-link" disabled>
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This website is licensed under a <a rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                  Commons Attribution-ShareAlike 4.0 International
+                  License</a>.
+              </p>
+              <p>
+                This means you are free to borrow the <a
+                  href="https://github.com/nerfies/nerfies.github.io">source
+                  code</a> of this website,
+                we just ask that you link back to this page in the footer.
+                Please remember to remove the analytics code included in the
+                header of the website which
+                you do not want on your website.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- <script>
+      bulmaCarousel.attach('#results-carousel', {
+        slidesToScroll: 1,
+        slidesToShow: 4,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        breakpoints: [
+          { changePoint: 480, slidesToShow: 1 },
+          { changePoint: 768, slidesToShow: 2 },
+          { changePoint: 1024, slidesToShow: 3 },
+          { changePoint: 1408, slidesToShow: 4 }
+        ]
+      });
+    </script> -->
+
+  </body>
+</html>

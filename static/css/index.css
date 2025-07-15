@@ -1,0 +1,1113 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+/* Custom container fluid */
+.container-fluid {
+  width: 90%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Trajectory Visualization Styles */
+.trajectory-container {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  margin-top: 20px;
+  margin-bottom: 0;
+  color: #333;
+  height: auto;
+  max-height: 480px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  border-bottom: none;
+}
+
+.trajectory-sidebar {
+  width: 300px;
+  flex: 0 0 300px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  height: auto;
+}
+
+.trajectory-main {
+  flex: 1;
+  position: relative;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 0;
+}
+
+.trajectory-main img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.user-query-section {
+  flex: 0 0 auto;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.query-marker {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #666;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.query-content {
+  padding-left: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 12px;
+  border: 1px solid #eee;
+}
+
+.query-content p {
+  color: #333;
+  line-height: 1.35;
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+.step-section {
+  display: none;
+}
+
+.step-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.step-list-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.step-list-item:hover {
+  background-color: #f0f0f0;
+}
+
+.step-list-item.active {
+  background-color: #f0f0f0;
+  border-left: 3px solid #888;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  min-height: 28px;
+}
+
+.step-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+.step-number {
+  font-weight: bold;
+  margin-right: 8px;
+  color: #666;
+  font-size: 0.75rem;
+}
+
+.step-title{
+  flex:1;
+  font-size: .75rem;     /* 与原来保持一致 */
+  line-height: 1.35;
+  white-space: normal;   /* 允许换行 */
+  word-break: break-word;/* 单词太长时折行 */
+  overflow: visible;     /* 不再截断 */
+  text-overflow: unset;
+}
+
+.step-toggle {
+  color: #666;
+  transition: transform 0.3s ease;
+}
+
+.step-content {
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+  margin-top: 0;
+  padding-left: 20px;
+  padding-right: 8px;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  font-size: 0.75rem;
+}
+
+.step-list-item.expanded .step-content {
+  position: static;
+  max-height: 220px;
+  margin-top: 6px;
+  margin-bottom: 2px;
+  overflow-y: auto;
+  opacity: 1;
+  padding: 0 8px 6px 20px;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+}
+
+.step-list-item.expanded .step-toggle {
+  transform: rotate(180deg);
+}
+
+.chain-of-thought {
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 0.75rem;
+  color: #444;
+  line-height: 1.35;
+  white-space: pre-line;
+  border-left: 3px solid #ddd;
+}
+
+.read-more-toggle {
+  display: none;
+}
+
+.trajectory-image-container {
+  position: relative;
+  display: block;
+  background-color: #000;
+}
+
+.trajectory-image-wrapper {
+  display: block;
+  position: relative;
+}
+
+.trajectory-image-wrapper img {
+  display: block;
+  object-fit: contain;
+}
+
+#traj-image {
+  display: block;
+}
+
+.controls-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 12px 0;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.step-controls {
+  position: static;
+  display: flex;
+  padding: 0;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transform: none;
+  left: auto;
+  bottom: auto;
+}
+
+.control-btn {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  color: #666666;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.control-btn#play-steps {
+  width: 44px;
+  height: 44px;
+  background-color: #ffffff;
+  color: #666666;
+}
+
+.control-btn#replay-step {
+  color: #3273dc;
+}
+
+.control-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.control-btn#play-steps:hover {
+  background-color: #f0f0f0;
+}
+
+.control-btn:disabled {
+  background-color: #f5f5f5;
+  color: #cccccc;
+  cursor: not-allowed;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+#traj-response {
+  max-height: 100px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+#traj-response.expanded {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.step-content p {
+  color: #333;
+  line-height: 1.35;
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+/* 移除底部渐变效果，因为内容现在是嵌入式的 */
+.step-list-item.expanded .step-content:after {
+  display: none;
+}
+
+.label {
+  font-size: 0.7rem;
+  color: #666;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* Carousel styles */
+.carousel-wrapper {
+  padding: 0rem 0;
+}
+
+.carousel {
+  overflow: hidden;
+}
+
+/* Section spacing */
+.section {
+  padding: 1.5rem 1.5rem;
+}
+
+.section .hero-body {
+  padding: 0;
+}
+
+.section .content {
+  margin-bottom: 0.5rem;
+}
+
+/* Card styles */
+.carousel .card {
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 400px;
+}
+
+.carousel .card-image {
+  flex: 0 0 240px; /* Fixed height for image section */
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel .card-image figure {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.carousel .card-image figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Changed to contain to show full image */
+  background-color: #f5f5f5; /* Light background for images */
+}
+
+.carousel .card-content.has-fixed-height {
+  flex: 1; /* Take remaining space */
+  overflow-y: auto;
+  padding: 0.75rem;
+}
+
+.carousel .card-content.has-fixed-height .content {
+  height: 100%;
+}
+
+.carousel .card-content.has-fixed-height h4 {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #363636;
+}
+
+.carousel .card-content.has-fixed-height p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #4a4a4a;
+  margin: 0;
+}
+
+/* Custom scrollbar for the fixed height content */
+.card-content.has-fixed-height::-webkit-scrollbar {
+  width: 4px;
+}
+
+.card-content.has-fixed-height::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.card-content.has-fixed-height::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+.card-content.has-fixed-height::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Modal styles */
+.modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: 0 auto;
+}
+
+.modal-content .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+}
+
+.modal-content .image img {
+  max-height: 85vh;
+  width: auto;
+  object-fit: contain;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Carousel image hover effect */
+.carousel .card-image img {
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.carousel .card-image img:hover {
+  opacity: 0.9;
+}
+
+/* Carousel navigation */
+.carousel-nav {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+
+.carousel-nav a {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  color: #4a4a4a;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.carousel-nav a:hover {
+  background: white;
+  color: #363636;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure carousel items are properly spaced */
+.carousel .item {
+  padding: 0 0.5rem;
+}
+
+.step-thought summary{
+  cursor:pointer;
+  font-size:.75rem;      /* 与标题统一 */
+  line-height:1.35;
+  font-weight:600;
+  color:#666;
+  margin-top:4px;
+}
+
+/* 展开内容 */
+.step-thought pre{
+  margin:4px 0 0 0;
+  font-size:.75rem;      /* 与标题统一 */
+  line-height:1.35;
+  white-space:pre-wrap;  /* 自动换行 */
+  color:#444;
+  background:#f8f8f8;
+  border-left:3px solid #ddd;
+  padding:6px 8px;
+  border-radius:4px;
+}
+
+/* ------------ ① 让 step 标题真正换行 ---------------- */
+.step-left{
+  /* 允许文本折行并把超出的内容展示出来 */
+  flex-wrap: wrap;        /* 关键：同一行放不下就自动换到下一行 */
+  align-items: flex-start;
+  overflow: visible;      /* 之前 hidden 会把第二行截掉 */
+}
+
+/* 若仍然看到省略号，可给下面两行加 !important */
+.step-title{
+  overflow: visible !important;
+  text-overflow: unset !important;
+}
+
+/* ------------ ② Thought 折叠块不要把侧边栏撑宽 -------- */
+.step-action-details{            /* 存放 Action+Thought 的容器 */
+  width: 100%;                   /* 限定在侧边栏宽度里 */
+  box-sizing: border-box;
+}
+.step-thought{                   /* Optional：给折叠块一点间距 */
+  margin-top: 4px;
+}
+
+/* ③ Thought 展开后再加一道保险，避免极长单词把宽度撑爆 */
+.step-thought pre{
+  word-break: break-word;        /* 超长单词折行 */
+}
+
+/* ---------- 侧边栏固定宽度 & 不被内容撑大 ---------- */
+.trajectory-sidebar{
+  width: 300px !important;   /* 固定宽度 */
+  flex: 0 0 300px !important;
+  max-width: 300px !important;
+  overflow-x: hidden;        /* 禁止横向滚动条 / 撑宽 */
+}
+
+/* ---------- Action & Thought 整体换行 ---------- */
+.step-action-details,
+.step-action-details code,
+.step-action-details pre{
+  white-space: normal !important;   /* 允许正常换行 */
+  word-break: break-word !important;/* 超长单词/路径也能断 */
+}
+
+/* 让单行 code 块独占一行（更易读）*/
+.step-action-details code{
+  display: block;
+  margin-top: 2px;
+}
+
+/* Thought 折叠块正文同样自动换行 */
+.step-thought pre{
+  white-space: pre-wrap !important; /* 保留换行同时可折行 */
+  word-break: break-word !important;
+}
+
+/* （可选）给 .step-action-details 增加 padding，视觉更紧凑 */
+.step-action-details{
+  padding-right: 4px;
+}
+
+.step-list-item,
+.step-header,
+.step-title,
+.step-action-details,
+.step-action-details code,
+.step-thought summary,
+.step-thought pre {
+  text-align: left !important;
+}
+
+/* 如果还想让标题里的数字和文字垂直方向顶对齐，而不是居中 */
+.step-left {
+  align-items: flex-start !important;
+}
+
+/* new */
+/* AgentNet 自动播放 + 全屏功能的样式 */
+
+.agentnet-grid-container {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.agentnet-video-section {
+  flex: 1.5;
+  max-width: 700px;
+}
+
+.agentnet-video-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: auto;
+}
+
+.agentnet-video-card {
+  position: relative;
+  background: #000;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.agentnet-video-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+
+.agentnet-video-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.agentnet-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.4s ease;
+}
+
+.agentnet-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* 悬停时自动播放视频 */
+.agentnet-video-card:hover .agentnet-video {
+  opacity: 1;
+}
+
+.agentnet-video-card:hover .agentnet-thumb {
+  opacity: 0;
+}
+
+/* 控制按钮覆盖层 */
+.agentnet-controls-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 20;
+}
+
+.agentnet-video-card:hover .agentnet-controls-overlay {
+  opacity: 1;
+}
+
+/* 全屏按钮 */
+.agentnet-fullscreen-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  color: white;
+}
+
+.agentnet-fullscreen-button:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+/* 播放/暂停按钮 */
+.agentnet-play-pause-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  color: white;
+}
+
+.agentnet-play-pause-button:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+.agentnet-video-label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 20;
+}
+
+.agentnet-video-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  color: white;
+  padding: 20px 10px 8px;
+  font-size: 0.65rem;
+  line-height: 1.2;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.agentnet-video-card:hover .agentnet-video-title {
+  opacity: 1;
+}
+
+/* 加载指示器 */
+.agentnet-loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 25;
+}
+
+.agentnet-video-card.loading .agentnet-loading-indicator {
+  opacity: 1;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 全屏模态框 */
+.agentnet-fullscreen-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.agentnet-fullscreen-modal.active {
+  display: flex;
+}
+
+.agentnet-fullscreen-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.agentnet-fullscreen-video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.agentnet-fullscreen-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.agentnet-fullscreen-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.agentnet-fullscreen-title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  color: white;
+  text-align: center;
+  font-size: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* Chart section */
+.agentnet-chart-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agentnet-chart-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  text-align: center;
+  width: 100%;
+  max-width: 350px;
+}
+
+.agentnet-chart-image {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.agentnet-chart-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .agentnet-grid-container {
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .agentnet-video-section {
+    max-width: 600px;
+  }
+  
+  .agentnet-chart-section {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .agentnet-video-grid {
+    gap: 8px;
+  }
+  
+  .agentnet-video-label {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+  
+  .agentnet-video-title {
+    font-size: 0.6rem;
+    padding: 15px 8px 6px;
+  }
+  
+  .agentnet-fullscreen-button,
+  .agentnet-play-pause-button {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .agentnet-video-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    aspect-ratio: auto;
+  }
+  
+  .agentnet-video-card {
+    aspect-ratio: 16/9;
+  }
+  
+  /* 在移动设备上调整悬停效果 */
+  .agentnet-video-card:hover {
+    transform: scale(1.02);
+  }
+}
