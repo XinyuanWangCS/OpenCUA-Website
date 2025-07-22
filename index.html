@@ -901,13 +901,63 @@
                   <tr><td>Claude 3.7 Sonnet <sup>[1]</sup></td><td>15.5</td><td>26.0</td><td>–</td><td>–</td></tr>
                   <tr><td>OpenAI CUA <sup>[24]</sup></td><td>19.7</td><td>32.6</td><td>–</td><td>–</td></tr>
                   <td class="our-model">OpenCUA-A3B</td></td><td>15.5<sub>±0.84</sub></td><td>17.3<sub>±0.50</sub></td><td>16.0<sub>±1.33</sub></td><td>17.5<sub>±0.74</sub></td></tr>
-                  <td class="our-model">OpenCUA-7B</td><td><b>18.5<sub>±1.22</sub></b></td><td><b>20.1<sub>±2.12</sub></b></td><td><b>16.1<sub>±2.02</sub></b></td><td><b>21.1<sub>±2.03</sub></b></td></tr>
+                  <td class="our-model">OpenCUA-7B</td><td>18.5<sub>±1.22</sub></td><td>20.1<sub>±2.12</sub></td><td>16.1<sub>±2.02</sub></td><td>21.1<sub>±2.03</sub></td></tr>
+                  <td class="our-model">OpenCUA-2.5-7B</td></td><td>21.8<sub>±1.5</sub></td><td>25.3<sub>±0.50</sub></td><td>22.5<sub>±0.8</sub></td><td>27.1<sub>±2.8</sub></td></tr>
+                  <td class="our-model">OpenCUA-2.5-32B</td><td><b>24.4<sub>±0.4</sub></b></td><td><b>27.7<sub>±1.2</sub></b></td><td><b>23.8<sub>±1.5</sub></b></td><td><b>28.0<sub>±2.0</sub></b></td></tr>
                 </tbody>
               </table>
               <p><sup>^</sup>Agentic results for OpenCUA are the average of four
                 runs.</p>
             </div>
+            <h3 class="title is-4">OSWorld Public Evaluation Platform</h3>
+              <p>
+                Evaluation results on the official <a href="https://osworld-benchmark.github.io" target="_blank"><b>OSWorld</b></a> benchmark platform. Results are grouped by model accessibility and reported for 15-step, 50-step, and 100-step execution budgets.
+              </p>
+              <div class="table-container">
+                <table class="comparison-table">
+                  <thead>
+                    <tr>
+                      <th>Model</th>
+                      <th>15 Steps</th>
+                      <th>50 Steps</th>
+                      <th>100 Steps</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td colspan="4"><b>Close Sourced</b></td></tr>
+                    <tr>
+                      <td>OpenAI CUA<sup>[24]</sup></td>
+                      <td>26.0</td><td>31.3</td><td>31.4</td>
+                    </tr>
+                    <tr>
+                      <td>Seed1.5-VL<sup>[25]</sup></td>
+                      <td>27.9</td><td>–</td><td>34.1</td>
+                    </tr>
+                    <tr>
+                      <td>Claude 3.7-Sonnet<sup>[26]</sup></td>
+                      <td>–</td><td>–</td><td>35.9</td>
+                    </tr>
+                    <tr>
+                      <td>UI-TARS-0717<sup>[27]</sup></td>
+                      <td>31.9</td><td>–</td><td>40.2</td>
+                    </tr>
+                    <tr>
+                      <td>Claude 4-Sonnet<sup>[28]</sup></td>
+                      <td>–</td><td>–</td><td>41.5</td>
+                    </tr>
 
+                    <tr><td colspan="4"><b>Open Sourced</b></td></tr>
+                    <tr class="our-model">
+                      <td>OpenCUA-2.5-7B (Ours)</td>
+                      <td>23.4</td><td>26.2</td><td>27.3</td>
+                    </tr>
+                    <tr class="our-model">
+                      <td>OpenCUA-2.5-32B (Ours)</td>
+                      <td>27.4</td><td><b>34.1</b></td><td>32.5</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
             <h3 class="title is-4">Offline Agentic Ability</h3>
             <div class="container is-max-desktop">
@@ -955,10 +1005,10 @@
             
                   <tr><td colspan="7"><b>Finetuned</b></td></tr>
                   <tr>
-                    <td class="our-model">OpenCUA-A3B</td><td>16B(A3B)</td><td>3</td><td>73.1</td><td>75.5</td><td>57.7</td><td>55.6</td>
+                    <td class="our-model">OpenCUA-2.5-7B</td><td>7B</td><td>3</td><td>71.0</td><td>75.4</td><td>46.4</td><td>53.6</td>
                   </tr>
                   <tr>
-                    <td class="our-model">OpenCUA-7B</td><td>7B</td><td>3</td><td>73.8</td><td>75.7</td><td>61.3</td><td>55.7</td>
+                    <td class="our-model">OpenCUA-2.5-32B</td><td>32B</td><td>3</td><td>71.7</td><td>76.6</td><td>46.8</td><td>51.5</td>
                   </tr>
                   
                 </tbody>
@@ -1021,6 +1071,18 @@
                     <td>91.4</td>
                     <td>28.5</td>
                     <td>48.6</td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">OpenCUA-2.5-7B</td>
+                    <td>92.3</td>
+                    <td>50.0</td>
+                    <td>55.3</td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">OpenCUA-2.5-72B</td>
+                    <td>93.6</td>
+                    <td>54.3</td>
+                    <td>58.9</td>
                   </tr>
                   
                 </tbody>
@@ -1545,7 +1607,7 @@ window.debugAgentNetAutoPlay = debugAgentNetAutoPlay;
             <div class="content has-text-justified">
               <p>
                 We appreciate Su Yu, Caiming Xiong, Binyuan Hui for their helpful feedback and discussion on this work. 
-                We appreciate Zaida Zhou, Flood Sung, Hao Hu, Huarong Chen, Calvin and Cody from Kimi Team for the great infrastructure provided and helpful discussion. 
+                We appreciate Zaida Zhou, Zhengtao Wang, Flood Sung, Hao Hu, Huarong Chen, Calvin, Qizheng Gu and Dikang Du from Kimi Team for the great infrastructure provided and helpful discussion. 
                 We sincerely thank our all the annotators for their great effort on this project.
               </p>
             </div>
@@ -1559,11 +1621,12 @@ window.debugAgentNetAutoPlay = debugAgentNetAutoPlay;
       <div class="container is-max-desktop content">
         <h2 class="title">BibTeX</h2>
         <p>If you find this work useful, please consider citing our paper:</p>
-        <pre><code>@article{OpenCUA2025,
-          title={OpenCUA: Open Foundations for Computer-Use Agents},
-          author={},
-          year={2025}
-        }</code></pre>
+        <pre><code>@article{OpenCUA2025, 
+  title={OpenCUA: Open Foundations for Computer-Use Agents}, 
+  author={Wang, Xinyuan and Wang, Bowen and Lu, Dunjie and Yang, Junlin and Xie, Tianbao and Wang, Junli and Deng, Jiaqi and Guo, Xiaole and Xu, Yiheng and Wu, Chen Henry and Shen, Zhennan and Li, Zhuokai and Li, Ryan and Li, Xiaochuan and Chen, Junda and Zheng, Boyuan and Li, Peihang and Lei, Fangyu and Cao, Ruisheng and Fu, Yeqiao and Shin, Dongchan and Shin, Martin and Hu, Jiarui and Wang, Yuyan and Chen, Jixuan and Ye, Yuxiao and Zhang, Danyang and Wang, Yipu and Wang, Heng and Yang, Diyi and Zhong, Victor and Charles, Y. and Yang, Zhilin and Yu, Tao}, 
+  year={2025}, 
+  url={https://opencua.xlang.ai/} 
+}</code></pre>
       </div>
     </section>
 
