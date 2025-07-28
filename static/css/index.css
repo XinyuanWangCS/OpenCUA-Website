@@ -13,6 +13,10 @@ body {
     margin-bottom: 5px;
 }
 
+.highlight-blue {
+  background-color: #e6f0ff; /* 淡蓝色 */
+}
+
 .dnerf {
   font-variant: small-caps;
 }
@@ -1111,3 +1115,46 @@ body {
     transform: scale(1.02);
   }
 }
+
+
+/* 淡蓝色列背景 */
+.highlight-blue {
+  background-color: #e6f0ff;
+}
+
+/* 鼠标悬停整行高亮 */
+.comparison-table tbody tr:hover {
+  background-color: #f5faff;
+}
+
+/* 响应式表格（如果未启用 Bulma 自带的） */
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* 表格样式基础增强 */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.comparison-table th,
+.comparison-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.comparison-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+/* 可选：高亮 ours 模型 */
+.our-model{
+  font-weight: 600;          /* 粗体 */
+  color: #1a1a74;            /* 深蓝文字 */
+  background: transparent;   /* 不再填充背景 */
+}
+
