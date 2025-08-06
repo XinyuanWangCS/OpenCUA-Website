@@ -108,8 +108,8 @@ body {
   display:flex;            /* 横向排布 */
   flex-wrap:wrap;          /* 超出自动换行 */
   justify-content:center;  /* 水平居中 */
-  gap:4px 8px;             /* 行/列间距，可按需要调整 */
-  max-width:900px;         /* ☆ 控制整行宽度（试着调到 860-950 之间）*/
+  gap:0px 8px;             /* 行/列间距，可按需要调整 */
+  max-width:200;         /* ☆ 控制整行宽度（试着调到 860-950 之间）*/
   margin:0 auto;           /* 居中 */
 }
 
