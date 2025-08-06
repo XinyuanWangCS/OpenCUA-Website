@@ -206,6 +206,205 @@
       .trajectory-tab {
         cursor: pointer;
       }
+
+/* ===== 优化表格样式 - 蓝色主题 ===== */
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+  color: #2c3e50;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,96,255,0.08);  
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px 0;
+  border: 1px solid #ffffff;
+}
+
+/* 表头样式 - 浅蓝灰色 */
+/* .comparison-table thead th {
+  background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fa 100%); 
+  color: #374151;
+  font-weight: 600;
+  padding: 14px 12px;
+  border: none;
+  border-bottom: 2px solid #d6e3ff; 
+  font-size: 0.85rem;
+  letter-spacing: 0.025em;
+} */
+.comparison-table thead th {
+  background: linear-gradient(135deg, #ededed 0%, #ededed  100%); 
+  color: #0f0f0f;
+  font-weight: 1000;
+  padding: 14px 12px;
+  border: none;
+  border-bottom: 2px solid #d6e3ff; 
+  font-size: 0.85rem;
+  letter-spacing: 0.025em;
+}
+
+.comparison-table thead th:first-child {
+  text-align: center;
+  padding-left: 20px;
+}
+
+/* 表格单元格 */
+.comparison-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.comparison-table td:first-child {
+  text-align: left;
+  padding-left: 30px;
+  font-weight: 800;
+  color: #616161;
+  font-size: 0.88rem;
+}
+
+/* 分组标题行 (Proprietary / Open-Source) */
+.comparison-table tbody tr td[colspan] {
+  background: #f8fafb;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #959595;
+  padding: 8px 20px;
+  border-bottom: 1px solid #d6e3ff;
+}
+
+/* 行悬停效果 */
+.comparison-table tbody tr:not(:has(td[colspan])):hover {
+  background: #e0e0e0;  /* 很浅的蓝色 */
+}
+
+/* 我们的模型高亮 - 蓝色主题 */
+.comparison-table .our-model {
+  font-weight: 900 !important;
+  color: #0046D5;  /* DeepBlue */
+  position: relative;
+  padding-left: 26px;
+  background: linear-gradient(90deg, #ffffff 0%, #f9f9f9 100%);  /* 浅蓝色背景 */
+}
+
+/* .comparison-table .our-model::before {
+  content: '★';  
+  position: absolute;
+  left: 100px;
+  color: #ffb742; 
+  font-size: 1em;
+} */
+
+/* 最佳分数加粗 */
+.comparison-table tbody td b {
+  color: #080808;  /* DeepBlue */
+  font-weight: 700;
+}
+
+/* 下划线样式（用于最佳proprietary分数） */
+.comparison-table td u {
+  text-decoration: underline;
+  text-decoration-color: #98CAFF;  /* Blue20 */
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* ===== 上下标垂直排列样式 ===== */
+.metric-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.metric-value {
+  font-weight: 600;
+  font-size: 1em;
+  line-height: 1;
+  color: #1f2937;
+}
+
+.metric-errors {
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 0.68rem;
+  line-height: 1;
+  margin-left: 3px;
+  gap: 1px;
+  position: relative;
+  top: -2px;
+}
+
+.metric-errors sup {
+  color: #48bb78;
+  font-size: 1em;
+  line-height: 0.9;  /* 更紧凑 */
+  display: block;
+}
+
+.metric-errors sub {
+  color: #f56565;
+  font-size: 1em;
+  line-height: 0.9;  /* 更紧凑 */
+  display: block;
+}
+
+/* 移除最后一行的边框 */
+.comparison-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* 特殊：蓝色高亮列 */
+.highlight-blue {
+  font-weight: 1200 !important;
+  background-color: #f0f6ff !important;  /* 很浅的蓝色 */
+}
+
+/* 淡入动画 */
+@keyframes fadeInRow {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comparison-table tbody tr {
+  animation: fadeInRow 0.3s ease-out forwards;
+}
+
+/* 动画延迟 */
+.comparison-table tbody tr:nth-child(1) { animation-delay: 0.02s; }
+.comparison-table tbody tr:nth-child(2) { animation-delay: 0.04s; }
+.comparison-table tbody tr:nth-child(3) { animation-delay: 0.06s; }
+/* ... 继续 ... */
+      
+.comparison-table tbody tr:not(:has(td[colspan])):hover td{
+  background:#f8faff;                            /* 原来的浅蓝 */
+  box-shadow:0 2px 8px rgba(0,0,0,.15);          /* 软阴影 */
+  position:relative;                             /* 让阴影可见 */
+  z-index:1;                                     /* 阴影浮在上层 */
+  transition:box-shadow .2s ease;
+}
+
+.comparison-table th,
+.comparison-table td {
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.comparison-table td.our-model{
+  color:#0036a2 !important;   /* 深蓝 */
+  font-weight: 1200 !important;
+}
     </style>
     <script
       src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -551,8 +750,7 @@
             <section class="hero teaser">
               <div class="container is-max-desktop">
                 <div class="hero-body">
-                  <img src="../static/images/main_fig.png"
-                    alt="OpenCUA Framework" width="100%">
+                  <img src="./static/images/main_fig.png" alt="OpenCUA Framework" width="100%">
                 </div>
               </div>
             </section>
@@ -792,7 +990,7 @@
               This large-scale verification required substantial engineering effort—please make sure to credit the outstanding work of the
               <a href="https://os-world.github.io/" target="_blank"><b>OSWorld Team</b></a>.
             </p>
-            <div class="table-container">
+            <!-- <div class="table-container">
               <table class="comparison-table">
                 <thead>
                   <tr>
@@ -852,8 +1050,97 @@
                   </tr>
                 </tbody>
               </table>
-            </div>
-
+            </div> -->
+            <div class="table-container">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>15&nbsp;Steps</th>
+                    <th>50&nbsp;Steps</th>
+                    <th>100&nbsp;Steps</th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <tr><td colspan="4"><b>Proprietary</b></td></tr>
+                  <tr><td>OpenAI&nbsp;CUA</td><td>26.0</td><td>31.3</td><td>31.4</td></tr>
+                  <tr><td>Seed1.5-VL</td><td>27.9</td><td>–</td><td>34.1</td></tr>
+                  <tr><td>Claude&nbsp;3.7&nbsp;Sonnet</td><td>27.1</td><td>35.8</td><td>35.9</td></tr>
+                  <tr><td>Claude&nbsp;4&nbsp;Sonnet</td><td><u>31.2</u></td><td><u>43.9</u></td><td><u>41.5</u></td></tr>
+              
+                  <tr><td colspan="4"><b>Open-Source</b></td></tr>
+                  <tr><td>Qwen2.5-VL-32B-Inst.</td><td>3.0</td><td>–</td><td>3.9</td></tr>
+                  <tr><td>Qwen2.5-VL-72B-Inst.</td><td>4.4</td><td>–</td><td>5.0</td></tr>
+                  <tr><td>Kimi-VL-A3B</td><td>9.7</td><td>–</td><td>10.3</td></tr>
+                  <tr><td>UI-TARS-72B-DPO</td><td>24.0</td><td>25.8</td><td>27.1</td></tr>
+                  <tr><td>UI-TARS-1.5-7B</td><td>24.5</td><td>27.3</td><td>27.4</td></tr>
+              
+                  <tr>
+                    <td class="our-model">OpenCUA-7B</td>
+                    <td>
+                      <span class="metric-wrapper">
+                        <span >24.3</span>
+                        <span class="metric-errors">
+                          <sup>+1.9</sup>
+                          <sub>−1.3</sub>
+                        </span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="metric-wrapper">
+                        <span >28.1</span>
+                        <span class="metric-errors">
+                          <sup>+0.7</sup>
+                          <sub>−0.4</sub>
+                        </span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="metric-wrapper">
+                        <span>26.6</span>
+                        <span class="metric-errors">
+                          <sup>+0.6</sup>
+                          <sub>−0.5</sub>
+                        </span>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="our-model">OpenCUA-32B</td>
+                    <td>
+                      <span class="metric-wrapper">
+                        <span><b>29.7</b></span>
+                        <span class="metric-errors">
+                          <sup>+0.8</sup>
+                          <sub>−1.5</sub>
+                        </span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="metric-wrapper">
+                        <span ><b>34.1</b></span>
+                        <span class="metric-errors">
+                          <sup>+1.0</sup>
+                          <sub>−0.6</sub>
+                        </span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="metric-wrapper">
+                        <span ><b>34.8</b></span>
+                        <span class="metric-errors">
+                          <sup>+0.9</sup>
+                          <sub>−1.0</sub>
+                        </span>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div> 
+            
+              
 
             <h3 class="title is-4">Offline Agentic Ability</h3>
             <div class="container is-max-desktop">
@@ -892,14 +1179,14 @@
                     <td>Qwen2.5-VL-72B</td><td>67.2</td><td>52.6</td><td>50.5</td><td class="highlight-blue">67.0</td>
                   </tr>
                   <tr>
-                    <td>OpenAI CUA</td><td>71.7</td><td>57.3</td><td>80.0</td><td class="highlight-blue">73.1</td>
+                    <td>OpenAI CUA</td><td>71.7</td><td><b>57.3</b></td><td><b>80.0</b></td><td class="highlight-blue">73.1</td>
                   </tr>
             
                   <tr>
                     <td class="our-model">OpenCUA-7B</td><td>75.4</td><td>46.4</td><td>53.6</td><td class="highlight-blue">71.0</td>
                   </tr>
                   <tr>
-                    <td class="our-model">OpenCUA-32B</td><td>78.7</td><td>46.0</td><td>55.2</td><td class="highlight-blue">73.2</td>
+                    <td class="our-model">OpenCUA-32B</td><td><b>78.7</b></td><td>46.0</td><td>55.2</td><td class="highlight-blue"><b>73.2</b></td>
                   </tr>
                 </tbody>
               </table>
@@ -1544,7 +1831,7 @@ window.debugAgentNetAutoPlay = debugAgentNetAutoPlay;
             <div class="content has-text-justified">
               <p>
                 We appreciate Su Yu, Caiming Xiong, Binyuan Hui for their helpful feedback and discussion on this work. 
-                We appreciate Zaida Zhou, Zhengtao Wang, Flood Sung, Hao Hu, Huarong Chen, Yanxu Chen, Calvin, Qizheng Gu and Dikang Du from Kimi Team for the great infrastructure provided and helpful discussion. 
+                We appreciate Zhengtao Wang, Yanxu Chen, Calvin, and Qizheng Gu from Kimi Team for the great infrastructure provided and helpful discussion. 
                 We sincerely thank our all the annotators for their great effort on this project.
               </p>
             </div>
