@@ -44,7 +44,7 @@
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/css/bulma-carousel.min.css"> -->
     <!-- <link rel="stylesheet" href="./static/css/bulma-carousel.css"> -->
     <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <link rel="stylesheet" href="./static/css/index.css">
@@ -759,6 +759,105 @@
       
     </section>
 
+    <!-- Trajectory Visualization -->
+    <section class="section" id="trajectory-visualization">
+      <div class="container-fluid">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-10">
+
+            <br></br>
+            <h3 class="title is-4">Computer-Use Showcase</h3>
+            <p>
+              Here are some success task trajectories selected from the evaluation results of OpenCUA-7B and OpenCUA-32B 👇
+            </p>
+            <div class="trajectory-selector">
+              <div class="tabs">
+                <ul>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="conversation_17570f9b-fba5-49f5-91aa-6414982481db_trajectory_1753980912">
+                    <a>Information Retrieval</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="conversation_af138e4f-8124-4c83-9e9b-13eac4491800_trajectory_1755099851">
+                    <a>Download OpenCUA Paper</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="39be0d19-634d-4475-8768-09c130f5425d">
+                    <a>Slides</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="conversation_42a46625-f505-4663-9d43-4998fa84fb7d_trajectory_1753981794">
+                    <a>MultiApp: Chrome&Slides</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="d53ff5ee-3b1a-431e-b2be-30ed2673079b-WOS">
+                    <a>Document</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="7a5a7856-f1b6-42a4-ade9-1ca81ca0f263-wos">
+                    <a>Chrome Bookmark</a>
+                  </li>
+                  <li class="trajectory-tab is-active"
+                    data-trajectory-id="4e60007a-f5be-4bfc-9723-c39affa0a6d3-WOS">
+                    <a>VSCode Extension</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="368d9ba4-203c-40c1-9fa3-da2f1430ce63">
+                    <a>Weather</a>
+                  </li>
+                  <li class="trajectory-tab"
+                    data-trajectory-id="5e2d93d8-8ad0-4435-b150-1692aacaa994-WOS">
+                    <a>VSCode</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="trajectory-container">
+              <div class="trajectory-sidebar">
+                <div class="user-query-section">
+                  <div class="query-marker">
+                    <span class="dot"></span>
+                    <span class="label">Task Instruction</span>
+                  </div>
+                  <div class="query-content">
+                    <p id="traj-instruction">Please help me install the autoDocstring extension in VS Code.</p>
+                  </div>
+                </div>
+
+                <ul class="step-list">
+                </ul>
+              </div>
+
+              <div class="trajectory-main">
+                <img id="traj-image"
+                  src="./static/trajs/4e60007a-f5be-4bfc-9723-c39affa0a6d3-WOS/step_1_20250511@060437.png"
+                  alt="Trajectory step 1">
+                <div id="mouse-indicator" class="mouse-indicator"></div>
+              </div>
+            </div>
+
+            <div class="controls-container">
+              <div class="step-controls">
+                <button class="control-btn" id="prev-step" disabled>
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="control-btn" id="play-steps">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn" id="next-step">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="control-btn" id="replay-step">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Framework Overview-->
     <section class="section">
       <div class="container is-max-desktop">
@@ -1306,93 +1405,6 @@
   </div>
 </div>
 
-
-    <!-- Trajectory Visualization -->
-    <section class="section" id="trajectory-visualization">
-      <div class="container-fluid">
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-10">
-
-            <br></br>
-            <h3 class="title is-4">Computer-Use Showcase</h3>
-            <p>
-              Here are some task trajectories selected from the evaluation results of OpenCUA-7B in OSWorld and WindowsAgentArena👇
-            </p>
-            <div class="trajectory-selector">
-              <div class="tabs">
-                <ul>
-                  <li class="trajectory-tab"
-                    data-trajectory-id="39be0d19-634d-4475-8768-09c130f5425d">
-                    <a>Slides</a>
-                  </li>
-                  <li class="trajectory-tab"
-                    data-trajectory-id="d53ff5ee-3b1a-431e-b2be-30ed2673079b-WOS">
-                    <a>Document</a>
-                  </li>
-                  <li class="trajectory-tab"
-                    data-trajectory-id="7a5a7856-f1b6-42a4-ade9-1ca81ca0f263-wos">
-                    <a>Chrome Bookmark</a>
-                  </li>
-                  <li class="trajectory-tab is-active"
-                    data-trajectory-id="4e60007a-f5be-4bfc-9723-c39affa0a6d3-WOS">
-                    <a>VSCode Extension</a>
-                  </li>
-                  <li class="trajectory-tab"
-                    data-trajectory-id="368d9ba4-203c-40c1-9fa3-da2f1430ce63">
-                    <a>Weather</a>
-                  </li>
-                  <li class="trajectory-tab"
-                    data-trajectory-id="5e2d93d8-8ad0-4435-b150-1692aacaa994-WOS">
-                    <a>VSCode</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="trajectory-container">
-              <div class="trajectory-sidebar">
-                <div class="user-query-section">
-                  <div class="query-marker">
-                    <span class="dot"></span>
-                    <span class="label">Task Instruction</span>
-                  </div>
-                  <div class="query-content">
-                    <p id="traj-instruction">Please help me install the autoDocstring extension in VS Code.</p>
-                  </div>
-                </div>
-
-                <ul class="step-list">
-                </ul>
-              </div>
-
-              <div class="trajectory-main">
-                <img id="traj-image"
-                  src="./static/trajs/4e60007a-f5be-4bfc-9723-c39affa0a6d3-WOS/step_1_20250511@060437.png"
-                  alt="Trajectory step 1">
-                <div id="mouse-indicator" class="mouse-indicator"></div>
-              </div>
-            </div>
-
-            <div class="controls-container">
-              <div class="step-controls">
-                <button class="control-btn" id="prev-step" disabled>
-                  <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="control-btn" id="play-steps">
-                  <i class="fas fa-play"></i>
-                </button>
-                <button class="control-btn" id="next-step">
-                  <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="control-btn" id="replay-step">
-                  <i class="fas fa-redo"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Result -->
     <section class="section">

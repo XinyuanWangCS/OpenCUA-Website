@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Tuple, Dict, Optional, List
 
 ROOT_DIR = Path(
-    "/home/wangxinyuan/workspace/AGN-OpenSource/opencua-website/static/trajs"
+    "./static/trajs"
 )
 OUT_FILE = ROOT_DIR / "trajectory.jsonl"
 

@@ -110,7 +110,7 @@ $(document).ready(function() {
         });
 
         // 默认选第一个 task
-        const firstId = Object.keys(trajectoriesData)[0];
+        const firstId = Object.keys(trajectoriesData)[6];
         if (!firstId) {
         console.error("No trajectory found in trajectory.jsonl");
         return;
@@ -144,7 +144,7 @@ $(document).ready(function() {
     }
     }
 
-    let currentTrajectoryId = "1e8df695-bd1b-45b3-b557-e7d599cf7597";
+    let currentTrajectoryId = null;
     let currentStep = 0;
     let isPlaying = false;
     let playInterval = null;
@@ -176,8 +176,9 @@ $(document).ready(function() {
         // 遍历所有步骤并预加载图片
         steps.forEach((step, index) => {
             if (step.image) {
+                const src = step.image || `./static/trajs/${trajectoryId}/${step.screenshot_file}`;
                 const img = new Image();
-                img.src = step.image;
+                img.src = src;
                 preloadedImages[trajectoryId][index] = img;
                 
                 // 添加加载完成事件监听器
@@ -374,82 +375,218 @@ $(document).ready(function() {
     $(window).on('load resize', adjustContainerHeight);
 
     // Initialize trajectory viewer
+    // function updateTrajViewer() {
+    //     const totalSteps = trajectoriesData[currentTrajectoryId].steps.length;
+    //     const step = trajectoriesData[currentTrajectoryId].steps[currentStep];
+        
+    //     // Update main image
+    //     // 如果有预加载的图片就使用预加载的，否则直接设置src
+    //     if (preloadedImages[currentTrajectoryId] && preloadedImages[currentTrajectoryId][currentStep]) {
+    //         const preloadedImg = preloadedImages[currentTrajectoryId][currentStep];
+    //         // 确保图片已经加载完成
+    //         if (preloadedImg.complete) {
+    //             $('#traj-image').attr('src', preloadedImg.src);
+    //         } else {
+    //             // 如果图片还没有加载完成，设置加载事件
+    //             preloadedImg.onload = function() {
+    //                 $('#traj-image').attr('src', preloadedImg.src);
+    //             };
+    //             // 同时也设置src以防图片加载失败
+    //             $('#traj-image').attr('src', step.image);
+    //         }
+    //     } else {
+    //         // 如果没有预加载则直接设置src
+    //         $('#traj-image').attr('src', step.image);
+    //     }
+        
+    //     // Update button states
+    //     $('#prev-step').prop('disabled', currentStep === 0);
+    //     $('#next-step').prop('disabled', currentStep === totalSteps - 1);
+        
+    //     // Update play button icon
+    //     if (isPlaying) {
+    //         $('#play-steps').html('<i class="fas fa-pause"></i>');
+    //     } else {
+    //         $('#play-steps').html('<i class="fas fa-play"></i>');
+    //     }
+        
+    //     // Update active step in list
+    //     $('.step-list-item').removeClass('active');
+    //     const $activeStep = $(`.step-list-item[data-step="${currentStep}"]`);
+    //     $activeStep.addClass('active');
+        
+    //     const $sidebar = $('.trajectory-sidebar');
+    //     if ($activeStep.length) {
+    //         setTimeout(function() {
+    //             let desiredScrollTop;
+    //             if (currentStep === 0) {
+    //                 desiredScrollTop = 0; // 初始加载时，强制滚动到最顶部
+    //             } else {
+    //                 // Calculate the position of the active step relative to the sidebar
+    //                 const activeStepTopInScrollableArea = $activeStep.offset().top - $sidebar.offset().top;
+    //                 const activeStepBottomInScrollableArea = activeStepTopInScrollableArea + $activeStep.outerHeight();
+    //                 const sidebarHeight = $sidebar.height();
+
+    //                 // Ensure the active step is fully visible
+    //                 if (activeStepTopInScrollableArea < 0) {
+    //                     desiredScrollTop = $sidebar.scrollTop() + activeStepTopInScrollableArea;
+    //                 } else if (activeStepBottomInScrollableArea > sidebarHeight) {
+    //                     desiredScrollTop = $sidebar.scrollTop() + (activeStepBottomInScrollableArea - sidebarHeight);
+    //                 } else {
+    //                     desiredScrollTop = $sidebar.scrollTop(); // No need to scroll
+    //                 }
+
+    //                 desiredScrollTop = Math.max(0, Math.min(desiredScrollTop, $sidebar[0].scrollHeight - sidebarHeight)); // Ensure the scroll position is within bounds
+    //             }
+
+    //             // 仅当需要改变滚动位置时才执行动画
+    //             if (Math.abs($sidebar.scrollTop() - Math.round(desiredScrollTop)) > 1) { // Apply tolerance and round target
+    //                 $sidebar.stop(true, true).animate({
+    //                     scrollTop: Math.round(desiredScrollTop) // Round desiredScrollTop for animation
+    //                 }, 300);
+    //             }
+    //         }, 50); 
+    //     }
+        
+    //     // Update mouse indicator
+    //     updateMouseIndicator(step);
+    // }
+    async function ensureTrajectoryLoaded(trajectoryId) {
+        if (trajectoriesData[trajectoryId]) return true;
+      
+        const base = `./static/trajs/${trajectoryId}/`;
+        try {
+          // 加个防缓存参数
+          const cfgResp = await fetch(base + 'config.json?v=' + Date.now(), { cache: 'no-store' });
+          if (!cfgResp.ok) throw new Error(`config.json ${cfgResp.status}`);
+          const config = await cfgResp.json();
+      
+          const trajResp = await fetch(base + 'traj.jsonl?v=' + Date.now(), { cache: 'no-store' });
+          if (!trajResp.ok) throw new Error(`traj.jsonl ${trajResp.status}`);
+          const text = await trajResp.text();
+      
+          // 逐行解析 jsonl
+          const rawSteps = text.split('\n').map(l => l.trim()).filter(Boolean).map(l => JSON.parse(l));
+      
+          // 适配你的 UI 结构
+          const steps = rawSteps.map((s, i) => {
+            const step = {
+              stepNum: s.step_num ?? (i + 1),
+              action: s.action || '',
+              thought: s.response || '',     // 你原来叫 response，这里塞到 thought 里展示
+              screenshot_file: s.screenshot_file || ''
+            };
+            // 让 updateTrajViewer 能直接用 step.image
+            if (step.screenshot_file) {
+              step.image = base + step.screenshot_file;
+            }
+      
+            // 简单解析下键盘/鼠标（可选）
+            const a = step.action;
+            if (/pyautogui\.(write|typewrite)\(/i.test(a)) {
+              const m = a.match(/['"]([^'"]+)['"]/);
+              step.keyboardAction = { type: 'type', text: m ? m[1] : 'text' };
+            } else if (/press\(/i.test(a)) {
+              const m = a.match(/press\(['"]([^'"]+)['"]\)/i);
+              step.keyboardAction = { type: 'press', key: m ? m[1] : 'key' };
+            } else {
+              const m = a.match(/pyautogui\.(click|moveTo|dragTo|drag)\(([^)]*)\)/i);
+              if (m) {
+                const kind = m[1].toLowerCase();
+                const nums = m[2].split(',').map(t => parseFloat(t)).filter(n => !Number.isNaN(n));
+                if (kind === 'click' && nums.length >= 2) {
+                  step.mouseAction = { type: 'click', x: nums[0], y: nums[1] };
+                } else if ((kind === 'drag' || kind === 'dragto') && nums.length >= 4) {
+                  step.mouseAction = { type: 'drag', startX: nums[0], startY: nums[1], endX: nums[2], endY: nums[3] };
+                }
+              }
+            }
+            return step;
+          });
+      
+          trajectoriesData[trajectoryId] = {
+            instruction: config.instruction || '',
+            steps
+          };
+          return true;
+        } catch (err) {
+          console.error('[ensureTrajectoryLoaded] fail for', trajectoryId, err);
+          alert(`Failed to load trajectory ${trajectoryId}. Check folder name / files.`);
+          return false;
+        }
+      }
+
     function updateTrajViewer() {
         const totalSteps = trajectoriesData[currentTrajectoryId].steps.length;
         const step = trajectoriesData[currentTrajectoryId].steps[currentStep];
-        
-        // Update main image
-        // 如果有预加载的图片就使用预加载的，否则直接设置src
-        if (preloadedImages[currentTrajectoryId] && preloadedImages[currentTrajectoryId][currentStep]) {
-            const preloadedImg = preloadedImages[currentTrajectoryId][currentStep];
-            // 确保图片已经加载完成
-            if (preloadedImg.complete) {
-                $('#traj-image').attr('src', preloadedImg.src);
-            } else {
-                // 如果图片还没有加载完成，设置加载事件
-                preloadedImg.onload = function() {
-                    $('#traj-image').attr('src', preloadedImg.src);
-                };
-                // 同时也设置src以防图片加载失败
-                $('#traj-image').attr('src', step.image);
-            }
+      
+        // === 关键：构造图片 src（优先 step.image，否则用 screenshot_file） ===
+        const base = `./static/trajs/${currentTrajectoryId}/`;
+        let imgSrc = null;
+      
+        if (step.image && typeof step.image === 'string' && step.image.trim() !== '') {
+          // 如果 step.image 已经是绝对/相对路径都能用
+          imgSrc = step.image;
+          // 如果只给了文件名，也拼上 base（可选）
+          if (!step.image.includes('/') && !step.image.startsWith('./') && !step.image.startsWith('../')) {
+            imgSrc = base + step.image;
+          }
+        } else if (step.screenshot_file && typeof step.screenshot_file === 'string' && step.screenshot_file.trim() !== '') {
+          imgSrc = base + step.screenshot_file;
         } else {
-            // 如果没有预加载则直接设置src
-            $('#traj-image').attr('src', step.image);
+          console.warn('No image or screenshot_file in step', step);
+          imgSrc = ''; // 或者放一张占位图
         }
-        
-        // Update button states
+      
+        // 设置主图（如果有预加载图就用预加载的）
+        if (preloadedImages[currentTrajectoryId] && preloadedImages[currentTrajectoryId][currentStep]) {
+          const preloadedImg = preloadedImages[currentTrajectoryId][currentStep];
+          if (preloadedImg.complete) {
+            $('#traj-image').attr('src', preloadedImg.src);
+          } else {
+            preloadedImg.onload = function() { $('#traj-image').attr('src', preloadedImg.src); };
+            $('#traj-image').attr('src', imgSrc);
+          }
+        } else {
+          $('#traj-image').attr('src', imgSrc);
+        }
+      
+        // 更新按钮状态
         $('#prev-step').prop('disabled', currentStep === 0);
         $('#next-step').prop('disabled', currentStep === totalSteps - 1);
-        
-        // Update play button icon
-        if (isPlaying) {
-            $('#play-steps').html('<i class="fas fa-pause"></i>');
-        } else {
-            $('#play-steps').html('<i class="fas fa-play"></i>');
-        }
-        
-        // Update active step in list
+        $('#play-steps').html(isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>');
+      
+        // 高亮侧边栏当前 step，并滚动到可见区域（原逻辑保留）
         $('.step-list-item').removeClass('active');
         const $activeStep = $(`.step-list-item[data-step="${currentStep}"]`);
         $activeStep.addClass('active');
-        
+      
         const $sidebar = $('.trajectory-sidebar');
         if ($activeStep.length) {
-            setTimeout(function() {
-                let desiredScrollTop;
-                if (currentStep === 0) {
-                    desiredScrollTop = 0; // 初始加载时，强制滚动到最顶部
-                } else {
-                    // Calculate the position of the active step relative to the sidebar
-                    const activeStepTopInScrollableArea = $activeStep.offset().top - $sidebar.offset().top;
-                    const activeStepBottomInScrollableArea = activeStepTopInScrollableArea + $activeStep.outerHeight();
-                    const sidebarHeight = $sidebar.height();
-
-                    // Ensure the active step is fully visible
-                    if (activeStepTopInScrollableArea < 0) {
-                        desiredScrollTop = $sidebar.scrollTop() + activeStepTopInScrollableArea;
-                    } else if (activeStepBottomInScrollableArea > sidebarHeight) {
-                        desiredScrollTop = $sidebar.scrollTop() + (activeStepBottomInScrollableArea - sidebarHeight);
-                    } else {
-                        desiredScrollTop = $sidebar.scrollTop(); // No need to scroll
-                    }
-
-                    desiredScrollTop = Math.max(0, Math.min(desiredScrollTop, $sidebar[0].scrollHeight - sidebarHeight)); // Ensure the scroll position is within bounds
-                }
-
-                // 仅当需要改变滚动位置时才执行动画
-                if (Math.abs($sidebar.scrollTop() - Math.round(desiredScrollTop)) > 1) { // Apply tolerance and round target
-                    $sidebar.stop(true, true).animate({
-                        scrollTop: Math.round(desiredScrollTop) // Round desiredScrollTop for animation
-                    }, 300);
-                }
-            }, 50); 
+          setTimeout(function() {
+            let desiredScrollTop;
+            if (currentStep === 0) {
+              desiredScrollTop = 0;
+            } else {
+              const activeTop = $activeStep.offset().top - $sidebar.offset().top;
+              const activeBottom = activeTop + $activeStep.outerHeight();
+              const sidebarH = $sidebar.height();
+      
+              if (activeTop < 0) desiredScrollTop = $sidebar.scrollTop() + activeTop;
+              else if (activeBottom > sidebarH) desiredScrollTop = $sidebar.scrollTop() + (activeBottom - sidebarH);
+              else desiredScrollTop = $sidebar.scrollTop();
+      
+              desiredScrollTop = Math.max(0, Math.min(desiredScrollTop, $sidebar[0].scrollHeight - sidebarH));
+            }
+            if (Math.abs($sidebar.scrollTop() - Math.round(desiredScrollTop)) > 1) {
+              $sidebar.stop(true, true).animate({ scrollTop: Math.round(desiredScrollTop) }, 300);
+            }
+          }, 50);
         }
-        
-        // Update mouse indicator
+      
+        // 更新鼠标/键盘指示（沿用你现有的）
         updateMouseIndicator(step);
-    }
+      }
     
     // Toggle read more functionality
     $('.read-more-toggle').click(function() {
@@ -716,12 +853,14 @@ $(document).ready(function() {
     });
     
     // Trajectory selector event listener
-    $('.trajectory-tab').click(function() {
+    $('.trajectory-tab').off('click').on('click', async function () {
         const trajectoryId = $(this).data('trajectory-id');
-        if (trajectoryId !== currentTrajectoryId) {
-            loadTrajectory(trajectoryId);
-        }
-    });
+        if (trajectoryId === currentTrajectoryId) return;
+
+        // 大小写必须和目录一致（Linux 区分大小写）
+        const ok = await ensureTrajectoryLoaded(trajectoryId);
+        if (ok) loadTrajectory(trajectoryId);
+        });
     
     // Handle window resize to reposition mouse indicator
     $(window).resize(function() {
