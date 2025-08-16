@@ -110,7 +110,7 @@ $(document).ready(function() {
         });
 
         // 默认选第一个 task
-        const firstId = Object.keys(trajectoriesData)[7];
+        const firstId = Object.keys(trajectoriesData)[6];
         if (!firstId) {
         console.error("No trajectory found in trajectory.jsonl");
         return;
