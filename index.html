@@ -687,7 +687,7 @@
                       <span class="icon">
                         <i class="fab fa-github"></i>
                       </span>
-                      <span style="color:red;">Tool Code</span>
+                      <span>Tool Code</span>
                     </a>
                   </span>
                   <span class="link-block">
@@ -741,8 +741,8 @@
                 Our framework consists of: (1) an annotation infrastructure that seamlessly captures human computer-use demonstrations; 
                 (2) <b>AgentNet</b>, the first large-scale computer-use task dataset spanning 3 operating systems and 200+ applications and websites; 
                 (3) a scalable pipeline that transforms demonstrations into state–action pairs with reflective long Chain-of-Thought reasoning that sustain robust performance gains as data scales. 
-                Our end-to-end agent models demonstrate strong performance across CUA benchmarks. In particular, <b>OpenCUA-32B</b> achieves an average success rate of 34.8% on <a href="https://os-world.github.io/" target="_blank"><b>OSWorld‑Verified</b></a>, 
-                establishing a new state-of-the-art (SOTA) among open-source models and surpassing OpenAI CUA (GPT-4o). 
+                Our end-to-end agent models demonstrate strong performance across CUA benchmarks. In particular, <b>OpenCUA-72B</b> achieves an average success rate of 45.0% on <a href="https://os-world.github.io/" target="_blank"><b>OSWorld‑Verified</b></a>, 
+                establishing a new state-of-the-art (SOTA) among open-source models. It also attains 60.8% on ScreenSpot-Pro and <b>37.4%</b> (SOTA) on UI-Vision. 
                 Further analysis confirms that our approach generalizes well across domains and benefits significantly from increased test-time computation. 
                 We release our annotation tool, datasets, code, and models to build open foundations for further CUA research.
               </p>
@@ -752,17 +752,18 @@
         <!--/ Abstract. -->
 
         <!--  Updates.  -->
-        <!-- <div class="columns is-centered has-text-centered">
+        <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
             <h2 class="title is-3">Updates</h2>
             <div class="content has-text-justified">
               <ul>
-                <li><strong>[2025/05/12]</strong> Project website and code
-                  repository are now public</li>
+                <li><strong>[2025-10-03]</strong> New model!🔥 <a href="https://huggingface.co/xlangai/OpenCUA-72B-preview" target="_blank" rel="noopener noreferrer">OpenCUA-72B-preview</a> now ranks #1 on the <a href="https://os-world.github.io/" target="_blank" rel="noopener noreferrer">OSWorld-Verified leaderboard</a> with strong grounding, 37.3% (SOTA) on UI-Vision and 60.8% on ScreenSpot-Pro.</li>
+                <li><strong>[2025-09-04]</strong> <a href="https://github.com/xlang-ai/AgentNetTool" target="_blank" rel="noopener noreferrer">AgentNetTool code</a>🛠️ is now available!</li>
+                <li><strong>[2025-08-13]</strong> <a href="https://github.com/xlang-ai/OpenCUA" target="_blank" rel="noopener noreferrer">Project code repository</a> is now public.</li>
               </ul>
             </div>
           </div>
-        </div> -->
+        </div>
         <!--/ Updates. -->
       </div>
       
@@ -1100,7 +1101,7 @@
             <div class="content has-text-justified" style="margin-top: 30px;">
               <p>
                 We conduct supervised fine-tuning (SFT) on Kimi-VL-A3B, Qwen2-VL-7B, Qwen2.5-VL-7B and Qwen2.5-VL-32B, and obtained our OpenCUA model variants: OpenCUA-A3B, OpenCUA-Qwen2-7B, OpenCUA-7B, and OpenCUA-2.5-32B.
-                Our best models - <b>OpenCUA-7B</b> and <b>OpenCUA-32B</b> - achieves superior performance in agent grounding and planning benchmarks. 
+                Our best models - <b>OpenCUA-7B</b>, <b>OpenCUA-32B</b> and <b>OpenCUA-72B</b> - achieves superior performance in agent grounding and planning benchmarks.
               <p>
             </div>
             
@@ -1206,7 +1207,7 @@
                     <td class="our-model">OpenCUA-72B-preview</td>
                     <td>
                       <span class="metric-wrapper">
-                        <span><b>-</b></span>
+                        <span><b>39.0</b></span>
                         <!-- <span class="metric-errors">
                           <sup>+0.8</sup>
                           <sub>−1.5</sub>
@@ -1301,6 +1302,7 @@
                     <th>ScreenSpot-v2</th>
                     <th>ScreenSpot-Pro</th>
                     <th>OSWorld-G</th>
+                    <th>UI-Vision</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1309,60 +1311,49 @@
                     <td>91.6</td>
                     <td>35.7</td>
                     <td>47.5</td>
+                    <td>17.6</td>
                   </tr>
                   <tr>
                     <td class="model-name">Operator</td>
                     <td>70.5</td>
                     <td>36.6</td>
                     <td>40.6</td>
-                  </tr>
-                  <tr>
-                    <td class="model-name">Qwen2.5-VL-3B</td>
-                    <td>80.9</td>
-                    <td>25.9</td>
-                    <td>27.3</td>
+                    <td>-</td>
                   </tr>
                   <tr>
                     <td class="model-name">Qwen2.5-VL-7B</td>
                     <td>88.8</td>
                     <td>27.6</td>
                     <td>31.4</td>
+                    <td>0.85</td>
                   </tr>
                   <tr>
                     <td class="model-name">Qwen2.5-VL-32B</td>
                     <td>91.3</td>
                     <td>39.4</td>
                     <td>46.5</td>
-                  </tr>
-                  <tr>
-                    <td class="our-model">OpenCUA-Qwen2-7B</td>
-                    <td>88.5</td>
-                    <td>23.7</td>
-                    <td>45.7</td>
-                  </tr>
-                  <tr>
-                    <td class="our-model">OpenCUA-A3B</td>
-                    <td>91.4</td>
-                    <td>28.5</td>
-                    <td>48.6</td>
+                    <td>-</td>
                   </tr>
                   <tr>
                     <td class="our-model">OpenCUA-7B</td>
                     <td>92.3</td>
                     <td>50.0</td>
                     <td>55.3</td>
+                    <td>29.7</td>
                   </tr>
                   <tr>
                     <td class="our-model">OpenCUA-32B</td>
                     <td><b>93.4</b></td>
-                    <td><b>55.3</b></td>
+                    <td>55.3</td>
                     <td><b>59.6</b></td>
+                    <td>33.3</td>
                   </tr>
                   <tr>
-                    <td class="our-model">OpenCUA-32B</td>
-                    <td><b>92.9</b></td>
+                    <td class="our-model">OpenCUA-72B-preview</td>
+                    <td>92.9</td>
                     <td><b>60.8</b></td>
-                    <td><b>-</b></td>
+                    <td>59.2</td>
+                    <td><b>37.3</b></td>
                   </tr>
                   
                 </tbody>
@@ -1451,12 +1442,12 @@
                 <div class="card">
                   <div class="card-image">
                     <figure class="image">
-                      <img src="./static/images/main_scale_00.png"
-                           alt="Performance on OSWorld as training data scales">
+                      <img src="./static/images/testtime_scale.png"
+                           alt="Test-time scale performance on OSWorld">
                     </figure>
                   </div>
                   <div class="card-content has-text-centered is-size-7">
-                    Training-data scaling on OSWorld
+                    Test-time scale performance on OSWorld
                   </div>
                 </div>
               </div>
