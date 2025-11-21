@@ -757,7 +757,9 @@
             <h2 class="title is-3">Updates</h2>
             <div class="content has-text-justified">
               <ul>
-                <li><strong>[2025-10-03]</strong> New model!🔥 <a href="https://huggingface.co/xlangai/OpenCUA-72B" target="_blank" rel="noopener noreferrer">OpenCUA-72B</a> now ranks #1 on the <a href="https://os-world.github.io/" target="_blank" rel="noopener noreferrer">OSWorld-Verified leaderboard</a> with strong grounding, 37.3% (SOTA) on UI-Vision and 60.8% on ScreenSpot-Pro.</li>
+                <li><strong>[2025-10-11]</strong> OpenCUA received the Best Paper Award at the COLM AIA Workshop!</li>
+                <li><strong>[2025-10-03]</strong> New model!🔥 <a href="https://huggingface.co/xlangai/OpenCUA-72B" target="_blank" rel="noopener noreferrer">OpenCUA-72B</a> now ranks #1 on the <a href="https://os-world.github.io/" target="_blank" rel="noopener noreferrer">OSWorld-Verified leaderboard</a> (avg. 45% SR) with strong grounding, 37.3% (SOTA) on UI-Vision and 60.8% on ScreenSpot-Pro.</li>
+                <li><strong>[2025-09-19]</strong> OpenCUA and Jedi are accepted by NeurIPS as Spotlight papers!</li>
                 <li><strong>[2025-09-04]</strong> <a href="https://github.com/xlang-ai/AgentNetTool" target="_blank" rel="noopener noreferrer">AgentNetTool code</a>🛠️ is now available!</li>
                 <li><strong>[2025-08-13]</strong> <a href="https://github.com/xlang-ai/OpenCUA" target="_blank" rel="noopener noreferrer">Project code repository</a> is now public.</li>
               </ul>
@@ -1396,47 +1398,6 @@
         <div class="column  is-centered has-text-centered">
           <div class="content">
             <h2 class="title is-3">Analysis</h2>
-            
-            <!-- <h3 class="title is-4">Cross-system Agentic Ability</h3>
-            <p>
-              We perform online evaluations on <b>OSWorld</b> and <b>WindowsAgentArena</b> using our own scaffolding across a range of model structures and sizes, including Kimi-VL-A3B, Qwen2-VL-7B, Qwen2.5-VL-7B, and Qwen2.5-VL-32B. 
-              Our results demonstrate that our approach generalizes well across model structures and sizes, consistently improving upon the corresponding base models. Furthermore, model scaling leads to significant gains: OpenCUA-32B substantially outperforms OpenCUA-7B across both benchmarks.
-            </p>
-
-            <div class="table-container">
-              <table class="comparison-table">
-                <thead>
-                  <tr>
-                    <th rowspan="2">Agent Model</th>
-                    <th colspan="2">OSWorld</th>
-                    <th colspan="2">WAA</th>
-                  </tr>
-                  <tr>
-                    <th>15 steps</th>
-                    <th>50 steps</th>
-                    <th>15 steps</th>
-                    <th>50 steps</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>GPT-4o <sup>[15]</sup></td><td>5.0</td><td>–</td><td>–</td><td>–</td></tr>
-                  <tr><td>Kimi-VL-A3B</td><td>8.2</td><td>–</td><td>10.4</td><td>–</td></tr>
-                  <tr><td>Qwen-2.5-VL-72B</td><td>8.8</td><td>–</td><td>–</td><td>–</td></tr>
-                  <tr><td>Aguvis-72B</td><td>10.3</td><td>–</td><td>–</td><td>–</td></tr>
-                  <tr><td>UI-TARS-7B-SFT</td><td>17.7</td><td>–</td><td>–</td><td>–</td></tr>
-                  <tr><td>UI-TARS-72B-SFT <sup>[25]</sup></td><td>18.8</td><td>–</td><td>–</td><td>–</td></tr> 
-                  <tr><td>UI-TARS-72B-DPO</td><td>22.7</td><td>24.6</td><td>–</td><td>–</td></tr>
-                  <tr><td>Claude 3.7 Sonnet</td><td>15.5</td><td>26.0</td><td>–</td><td>–</td></tr>
-                  <tr><td>OpenAI CUA</td><td>19.7</td><td>32.6</td><td>–</td><td>–</td></tr>
-                  <td class="our-model">OpenCUA-A3B</td></td><td>15.5<sub>±0.84</sub></td><td>17.3<sub>±0.50</sub></td><td>16.0<sub>±1.33</sub></td><td>17.5<sub>±0.74</sub></td></tr>
-                  <td class="our-model">OpenCUA-7B</td><td>18.5<sub>±1.22</sub></td><td>20.1<sub>±2.12</sub></td><td>16.1<sub>±2.02</sub></td><td>21.1<sub>±2.03</sub></td></tr>
-                  <td class="our-model">OpenCUA-2.5-7B</td></td><td>21.8<sub>±1.5</sub></td><td>25.3<sub>±0.50</sub></td><td>22.5<sub>±0.8</sub></td><td>27.1<sub>±2.8</sub></td></tr>
-                  <td class="our-model">OpenCUA-2.5-32B</td><td><b>24.4<sub>±0.4</sub></b></td><td><b>27.7<sub>±1.2</sub></b></td><td><b>23.8<sub>±1.5</sub></b></td><td><b>28.0<sub>±2.0</sub></b></td></tr>
-                </tbody>
-              </table>
-              <p><sup>^</sup>Agentic results for OpenCUA are the average of four runs.</p>
-            </div> -->
-
 
             <h3 class="title is-4">Data Scaling and Test Time Scaling</h3>
             <p>
@@ -1474,6 +1435,26 @@
                 </div>
               </div>
             
+            </div>
+
+            <h3 class="title is-4">Domain transfer</h3>
+            <p>
+              Training Qwen2-VL ablations on Ubuntu-only or Win&Mac-only data still boosts OSWorld (Ubuntu), WindowsAgentArena (Windows), and AgentNetBench (Mac/Windows), proving cross-OS skills transfer instead of memorizing UI patterns.
+            </p>
+            <div class="columns is-centered">
+              <div class="column is-two-thirds">
+                <div class="card">
+                  <div class="card-image">
+                    <figure class="image">
+                      <img src="./static/images/domain_transfer.png"
+                           alt="Domain transfer across OSWorld, WindowsAgentArena, and AgentNetBench">
+                    </figure>
+                  </div>
+                  <div class="card-content has-text-centered is-size-7">
+                    Training on Ubuntu vs. Win&Mac data benefits all benchmarks.
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
