@@ -40,12 +40,12 @@ python3 convert_task.py
 If you use OpenCUA in your research, please cite our work:
 
 ```bibtex
-@misc{wang2025opencuaopenfoundationscomputeruse,
+@article{wang2025opencuaopenfoundationscomputeruse,
       title={OpenCUA: Open Foundations for Computer-Use Agents}, 
       author={Xinyuan Wang and Bowen Wang and Dunjie Lu and Junlin Yang and Tianbao Xie and Junli Wang and Jiaqi Deng and Xiaole Guo and Yiheng Xu and Chen Henry Wu and Zhennan Shen and Zhuokai Li and Ryan Li and Xiaochuan Li and Junda Chen and Boyuan Zheng and Peihang Li and Fangyu Lei and Ruisheng Cao and Yeqiao Fu and Dongchan Shin and Martin Shin and Jiarui Hu and Yuyan Wang and Jixuan Chen and Yuxiao Ye and Danyang Zhang and Dikang Du and Hao Hu and Huarong Chen and Zaida Zhou and Haotian Yao and Ziwei Chen and Qizheng Gu and Yipu Wang and Heng Wang and Diyi Yang and Victor Zhong and Flood Sung and Y. Charles and Zhilin Yang and Tao Yu},
       year={2025},
       eprint={2508.09123},
       archivePrefix={arXiv},
       primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2508.09123}, 
+      url={https://arxiv.org/abs/2508.09123}
 }
